@@ -22,8 +22,8 @@ public class User implements UserDetails {
     private long id;
     private String username;
     private String email;
-    private String firstName;
-    private String lastName;
+    private String firstname;
+    private String lastname;
     private String password;
     private boolean locked = false;
     private boolean enabled = true;
@@ -32,11 +32,11 @@ public class User implements UserDetails {
 //    TODO: Add vehicle entity
     //    private List<Vehicle> cars;
 
-    public User(String username, String email, String firstName, String lastName, String password) {
+    public User(String username, String email, String firstName, String lastname, String password) {
         this.username = username;
         this.email = email;
-        this.firstName = firstName;
-        this.lastName = lastName;
+        this.firstname = firstName;
+        this.lastname = lastname;
         this.password = password;
     }
 
