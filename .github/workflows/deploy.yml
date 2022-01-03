@@ -1,0 +1,19 @@
+on:
+  push:
+    branches:
+      - master
+name: Deploy to Heroku
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - uses: akhileshns/heroku-deploy@v3.8.8
+        with:
+          heroku_email: notedeagle@gmail.com
+          heroku_api_key: ${{secrets.HEROKU_API_KEY}}
+          heroku_app_name: fuel-tracker-note
+          branch: HEAD
+          useforce: false
+          dynamicFiles: false
