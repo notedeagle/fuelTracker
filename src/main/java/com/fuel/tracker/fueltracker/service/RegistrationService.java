@@ -12,8 +12,7 @@ public class RegistrationService {
     private final UserService userService;
 
     public void register(RegistrationCredentials request) {
-
-        userService.singUpUser(new User(request.getUserName(), request.getEmail(),
+        userService.singUpUser(new User(request.getUsername(), request.getEmail(),
                 request.getFirstName(), request.getLastName(), request.getPassword()));
     }
 }

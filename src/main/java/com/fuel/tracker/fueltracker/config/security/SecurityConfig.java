@@ -44,15 +44,21 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         this.bCryptPasswordEncoder = bCryptPasswordEncoder;
     }
 
+    public JsonObjectAuthenticationFilter authenticationFilter() throws Exception {
+        JsonObjectAuthenticationFilter authenticationFilter = new JsonObjectAuthenticationFilter(objectMapper);
+        authenticationFilter.setAuthenticationSuccessHandler(successHandler);
+        authenticationFilter.setAuthenticationFailureHandler(failureHandler);
+        authenticationFilter.setAuthenticationManager(super.authenticationManager());
+        return authenticationFilter;
+    }
+
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-
         auth.jdbcAuthentication()
-                .usersByUsernameQuery("select email,password,enabled from user where email = ?");
+                .usersByUsernameQuery("select email, password, enabled from user where email = ?");
 
         auth.authenticationProvider(daoAuthenticationProvider());
     }
-
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
@@ -79,17 +85,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .headers().frameOptions().disable();
     }
 
-    public JsonObjectAuthenticationFilter authenticationFilter() throws Exception {
-        JsonObjectAuthenticationFilter authenticationFilter = new JsonObjectAuthenticationFilter(objectMapper);
-        authenticationFilter.setAuthenticationSuccessHandler(successHandler);
-        authenticationFilter.setAuthenticationFailureHandler(failureHandler);
-        authenticationFilter.setAuthenticationManager(super.authenticationManager());
-        return authenticationFilter;
-    }
-
     @Bean
     CorsConfigurationSource corsConfigurationSource() {
-
         final UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
         CorsConfiguration config = new CorsConfiguration();
         source.registerCorsConfiguration("/**", config.applyPermitDefaultValues());

@@ -26,9 +26,9 @@ public class User implements UserDetails {
     private String lastName;
     private String password;
     private boolean locked = false;
-    private boolean enabled = false;
+    private boolean enabled = true;
     @Enumerated(EnumType.STRING)
-    private UserRole userRole;
+    private UserRole userRole = UserRole.USER;
 //    TODO: Add vehicle entity
     //    private List<Vehicle> cars;
 
