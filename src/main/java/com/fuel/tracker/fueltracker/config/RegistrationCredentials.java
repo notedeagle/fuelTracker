@@ -1,0 +1,16 @@
+package com.fuel.tracker.fueltracker.config;
+
+import lombok.*;
+
+@Getter
+@Setter
+@AllArgsConstructor
+@EqualsAndHashCode
+@ToString
+public class RegistrationCredentials {
+    private final String userName;
+    private final String email;
+    private final String firstName;
+    private final String lastName;
+    private final String password;
+}
