@@ -1,9 +1,11 @@
-package com.fuel.tracker.fueltracker.config;
+package com.fuel.tracker.fueltracker.config.security;
 
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.EqualsAndHashCode;
+import lombok.Getter;
+import lombok.ToString;
 
 @Getter
-@Setter
 @AllArgsConstructor
 @EqualsAndHashCode
 @ToString
