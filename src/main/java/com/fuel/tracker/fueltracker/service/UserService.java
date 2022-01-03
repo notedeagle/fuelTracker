@@ -1,6 +1,6 @@
 package com.fuel.tracker.fueltracker.service;
 
-import com.fuel.tracker.fueltracker.mode.entity.User;
+import com.fuel.tracker.fueltracker.model.entity.User;
 import com.fuel.tracker.fueltracker.repository.UserRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.security.core.userdetails.UserDetails;

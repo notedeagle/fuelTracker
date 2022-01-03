@@ -1,6 +1,6 @@
 package com.fuel.tracker.fueltracker.repository;
 
-import com.fuel.tracker.fueltracker.mode.entity.User;
+import com.fuel.tracker.fueltracker.model.entity.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

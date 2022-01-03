@@ -1,4 +1,4 @@
-package com.fuel.tracker.fueltracker.mode.entity;
+package com.fuel.tracker.fueltracker.model.entity;
 
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -10,6 +10,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 import javax.persistence.*;
 import java.util.Collection;
 import java.util.Collections;
+import java.util.List;
 
 @Getter
 @Setter
@@ -29,8 +30,8 @@ public class User implements UserDetails {
     private boolean enabled = true;
     @Enumerated(EnumType.STRING)
     private UserRole userRole = UserRole.USER;
-//    TODO: Add vehicle entity
-    //    private List<Vehicle> cars;
+    @OneToMany
+    private List<Vehicle> cars;
 
     public User(String username, String email, String firstName, String lastname, String password) {
         this.username = username;
