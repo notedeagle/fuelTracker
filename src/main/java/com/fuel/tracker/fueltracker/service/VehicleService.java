@@ -26,4 +26,12 @@ public class VehicleService {
 
         return vehicleRepository.findAllByUserId(userId).orElseThrow(IllegalStateException::new);
     }
+
+    public Vehicle addVehicle(Vehicle vehicle) {
+        return vehicleRepository.save(vehicle);
+    }
+
+    public void deleteVehicle(Long id) {
+        vehicleRepository.deleteById(id);
+    }
 }
