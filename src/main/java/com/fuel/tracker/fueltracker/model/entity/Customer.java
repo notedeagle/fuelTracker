@@ -1,4 +1,4 @@
-package com.fuel.tracker.fueltracker.mode.entity;
+package com.fuel.tracker.fueltracker.model.entity;
 
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -15,7 +15,7 @@ import java.util.Collections;
 @Setter
 @NoArgsConstructor
 @Entity
-public class User implements UserDetails {
+public class Customer implements UserDetails {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -29,10 +29,8 @@ public class User implements UserDetails {
     private boolean enabled = true;
     @Enumerated(EnumType.STRING)
     private UserRole userRole = UserRole.USER;
-//    TODO: Add vehicle entity
-    //    private List<Vehicle> cars;
 
-    public User(String username, String email, String firstName, String lastname, String password) {
+    public Customer(String username, String email, String firstName, String lastname, String password) {
         this.username = username;
         this.email = email;
         this.firstname = firstName;
