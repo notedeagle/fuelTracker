@@ -25,5 +25,5 @@ public class Vehicle {
     private VehicleType type;
     private int registrationYear;
     @ManyToOne
-    User user;
+    private Customer user;
 }
