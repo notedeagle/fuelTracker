@@ -7,13 +7,17 @@ on: [push]
 
 jobs:
   build:
-
     runs-on: ${{matrix.os}}
     strategy:
       matrix:
         os: [ubuntu-latest, windows-latest, macOS-latest]
 
     steps:
+    - if: [ matrix.os == "macOS-lastest" ]; then
+          run: |
+                brew install docker docker-machine docker-compose
+                sudo docker –version
+
     - uses: actions/checkout@v2
     - name: Build the docker-compose
       run: docker-compose -f ./docker/docker-compose.yml up -d
