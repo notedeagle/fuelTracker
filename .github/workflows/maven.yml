@@ -14,8 +14,8 @@ jobs:
 
     steps:
     - name: Install docker-compose
+      if: matrix.os == "macOS-latest"
       run: |
-        if: [ matrix.os == "macOS-latest" ]; then
         brew install docker docker-machine docker-compose
         sudo docker –version
     - uses: actions/checkout@v2
