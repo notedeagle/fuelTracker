@@ -12,6 +12,9 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
+      - name: Build the docker-compose stack
+        working-directory: /.docker
+        run: docker-compose up -d
       - uses: akhileshns/heroku-deploy@v3.8.8
         with:
           heroku_email: notedeagle@gmail.com
