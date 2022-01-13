@@ -13,12 +13,11 @@ jobs:
         os: [ubuntu-latest, windows-latest, macOS-latest]
 
     steps:
-      - name: Install docker-compose
-        run: |
-          if: [ matrix.os == "macOS-latest" ]; then
-          brew install docker docker-machine docker-compose
-          sudo docker –version
-
+    - name: Install docker-compose
+      run: |
+        if: [ matrix.os == "macOS-latest" ]; then
+        brew install docker docker-machine docker-compose
+        sudo docker –version
     - uses: actions/checkout@v2
     - name: Build the docker-compose
       run: docker-compose -f ./docker/docker-compose.yml up -d
