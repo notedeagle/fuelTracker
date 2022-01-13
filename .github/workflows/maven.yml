@@ -13,8 +13,9 @@ jobs:
         os: [ubuntu-latest, windows-latest, macOS-latest]
 
     steps:
-      - run: |
-          if: [ matrix.os == "macOS-lastest" ]; then
+      - name: Install docker-compose
+        run: |
+          if: [ matrix.os == "macOS-latest" ]; then
           brew install docker docker-machine docker-compose
           sudo docker –version
 
