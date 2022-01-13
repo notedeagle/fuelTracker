@@ -1,7 +1,7 @@
 package com.fuel.tracker.fueltracker.service;
 
 import com.fuel.tracker.fueltracker.model.entity.Vehicle;
-import com.fuel.tracker.fueltracker.repository.UserRepository;
+import com.fuel.tracker.fueltracker.repository.CustomerRepository;
 import com.fuel.tracker.fueltracker.repository.VehicleRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -15,7 +15,7 @@ import java.util.Optional;
 public class VehicleService {
 
     private final VehicleRepository vehicleRepository;
-    private final UserRepository userRepository;
+    private final CustomerRepository customerRepository;
 
     public List<Vehicle> getAllVehicles() {
         return vehicleRepository.findAll();
@@ -23,14 +23,14 @@ public class VehicleService {
 
     public List<Vehicle> getAllUserVehicles() {
         String username = SecurityContextHolder.getContext().getAuthentication().getName();
-        long userId = userRepository.findByUsername(username).orElseThrow(IllegalStateException::new).getId();
-        return vehicleRepository.findAllByUserId(userId).orElseThrow(IllegalStateException::new);
+        long userId = customerRepository.findByUsername(username).orElseThrow(IllegalStateException::new).getId();
+        return vehicleRepository.findAllByCustomerId(userId).orElseThrow(IllegalStateException::new);
     }
 
     public Vehicle addVehicle(Vehicle vehicle) {
         String username = SecurityContextHolder.getContext().getAuthentication().getName();
-        return userRepository.findByUsername(username).map(user -> {
-            vehicle.setUser(user);
+        return customerRepository.findByUsername(username).map(customer -> {
+            vehicle.setCustomer(customer);
             return vehicleRepository.save(vehicle);
         }).orElseThrow(IllegalStateException::new);
     }

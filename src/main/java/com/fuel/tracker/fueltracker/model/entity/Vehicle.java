@@ -1,20 +1,20 @@
 package com.fuel.tracker.fueltracker.model.entity;
 
+import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
+import java.util.Set;
 
 @Getter
 @Setter
 @NoArgsConstructor
+@AllArgsConstructor
 @Entity
-public class Vehicle {
+public class Vehicle extends BaseEntity {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long id;
     private String name;
     private String brand;
     private String model;
@@ -24,6 +24,11 @@ public class Vehicle {
     @Enumerated(EnumType.STRING)
     private VehicleType type;
     private int registrationYear;
+
     @ManyToOne
-    private Customer user;
+    @JoinColumn(name = "customer_id")
+    private Customer customer;
+
+    @OneToMany(mappedBy = "vehicle")
+    private Set<Refuel> refuel;
 }

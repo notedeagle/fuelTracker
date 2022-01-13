@@ -1,0 +1,13 @@
+version:  '3.1'
+
+services:
+  db:
+    container_name: fuelTrackerDb
+    image: postgres:latest
+    restart: always
+    environment:
+      POSTGRES_DB: fuelTracker
+      POSTGRES_USER: admin
+      POSTGRES_PASSWORD: pass123
+    ports:
+      - "6432:5432"

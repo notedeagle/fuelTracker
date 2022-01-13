@@ -1,7 +1,7 @@
 package com.fuel.tracker.fueltracker.service;
 
 import com.fuel.tracker.fueltracker.model.entity.Customer;
-import com.fuel.tracker.fueltracker.repository.UserRepository;
+import com.fuel.tracker.fueltracker.repository.CustomerRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -11,10 +11,10 @@ import org.springframework.stereotype.Service;
 
 @Service
 @AllArgsConstructor
-public class UserService implements UserDetailsService {
+public class CustomerService implements UserDetailsService {
 
     private static final String USER_NOT_FOUND_MSG = "User with user name %s not found";
-    private final UserRepository userRepository;
+    private final CustomerRepository userRepository;
     private final BCryptPasswordEncoder bCryptPasswordEncoder;
 
     public void singUpUser(Customer user) {

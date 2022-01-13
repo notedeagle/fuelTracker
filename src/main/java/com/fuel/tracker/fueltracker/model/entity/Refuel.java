@@ -12,11 +12,8 @@ import java.time.LocalDateTime;
 @Setter
 @NoArgsConstructor
 @Entity
-public class Refuel {
+public class Refuel extends BaseEntity {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long id;
     private LocalDateTime date;
     private long odometer;
     @Enumerated(EnumType.STRING)
@@ -25,6 +22,8 @@ public class Refuel {
     private BigDecimal totalCost;
     private BigDecimal litres;
     private boolean fullTank;
+
     @ManyToOne
+    @JoinColumn(name = "vehicle_id")
     private Vehicle vehicle;
 }

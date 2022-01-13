@@ -1,7 +1,7 @@
 package com.fuel.tracker.fueltracker.config.security;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fuel.tracker.fueltracker.service.UserService;
+import com.fuel.tracker.fueltracker.service.CustomerService;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -28,19 +28,19 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     private final RestAuthenticationSuccessHandler successHandler;
     private final RestAuthenticationFailureHandler failureHandler;
     private final String secret;
-    private final UserService userService;
+    private final CustomerService customerService;
     private final BCryptPasswordEncoder bCryptPasswordEncoder;
 
     public SecurityConfig(ObjectMapper objectMapper,
                           RestAuthenticationSuccessHandler successHandler,
                           RestAuthenticationFailureHandler failureHandler,
                           @Value("${jwt.secret}") String secret,
-                          UserService userService, BCryptPasswordEncoder bCryptPasswordEncoder) {
+                          CustomerService userService, BCryptPasswordEncoder bCryptPasswordEncoder) {
         this.objectMapper = objectMapper;
         this.successHandler = successHandler;
         this.failureHandler = failureHandler;
         this.secret = secret;
-        this.userService = userService;
+        this.customerService = userService;
         this.bCryptPasswordEncoder = bCryptPasswordEncoder;
     }
 
@@ -78,7 +78,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
                 .and()
                 .addFilter(authenticationFilter())
-                .addFilter(new JwtAuthorizationFilter(authenticationManager(), userService, secret))
+                .addFilter(new JwtAuthorizationFilter(authenticationManager(), customerService, secret))
                 .exceptionHandling()
                 .authenticationEntryPoint(new HttpStatusEntryPoint(HttpStatus.UNAUTHORIZED))
                 .and()
@@ -98,7 +98,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     public DaoAuthenticationProvider daoAuthenticationProvider() {
         DaoAuthenticationProvider provider = new DaoAuthenticationProvider();
         provider.setPasswordEncoder(bCryptPasswordEncoder);
-        provider.setUserDetailsService(userService);
+        provider.setUserDetailsService(customerService);
         return provider;
     }
 }
