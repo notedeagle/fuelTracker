@@ -22,14 +22,14 @@ public class VehicleService {
     }
 
     public List<Vehicle> getAllUserVehicles() {
-        String username = SecurityContextHolder.getContext().getAuthentication().getName();
-        long userId = customerRepository.findByUsername(username).orElseThrow(IllegalStateException::new).getId();
+        String email = SecurityContextHolder.getContext().getAuthentication().getName();
+        long userId = customerRepository.findByEmail(email).orElseThrow(IllegalStateException::new).getId();
         return vehicleRepository.findAllByCustomerId(userId).orElseThrow(IllegalStateException::new);
     }
 
     public Vehicle addVehicle(Vehicle vehicle) {
-        String username = SecurityContextHolder.getContext().getAuthentication().getName();
-        return customerRepository.findByUsername(username).map(customer -> {
+        String email = SecurityContextHolder.getContext().getAuthentication().getName();
+        return customerRepository.findByEmail(email).map(customer -> {
             vehicle.setCustomer(customer);
             return vehicleRepository.save(vehicle);
         }).orElseThrow(IllegalStateException::new);
