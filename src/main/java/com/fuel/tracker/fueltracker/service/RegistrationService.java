@@ -9,10 +9,10 @@ import org.springframework.stereotype.Service;
 @AllArgsConstructor
 public class RegistrationService {
 
-    private final UserService userService;
+    private final CustomerService customerService;
 
     public void register(RegistrationCredentials request) {
-        userService.singUpUser(new Customer(request.getUsername(), request.getEmail(),
+        customerService.singUpUser(new Customer(request.getUsername(), request.getEmail(),
                 request.getFirstName(), request.getLastName(), request.getPassword()));
     }
 }

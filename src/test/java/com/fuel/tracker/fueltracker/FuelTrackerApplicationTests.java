@@ -9,5 +9,4 @@ class FuelTrackerApplicationTests {
     @Test
     void contextLoads() {
     }
-
 }

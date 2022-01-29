@@ -1,5 +1,6 @@
 package com.fuel.tracker.fueltracker.model.entity;
 
+import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -10,16 +11,15 @@ import org.springframework.security.core.userdetails.UserDetails;
 import javax.persistence.*;
 import java.util.Collection;
 import java.util.Collections;
+import java.util.Set;
 
 @Getter
 @Setter
 @NoArgsConstructor
+@AllArgsConstructor
 @Entity
-public class Customer implements UserDetails {
+public class Customer extends BaseEntity implements UserDetails {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long id;
     private String username;
     private String email;
     private String firstname;
@@ -29,6 +29,9 @@ public class Customer implements UserDetails {
     private boolean enabled = true;
     @Enumerated(EnumType.STRING)
     private UserRole userRole = UserRole.USER;
+
+    @OneToMany(mappedBy = "customer")
+    private Set<Vehicle> vehicles;
 
     public Customer(String username, String email, String firstName, String lastname, String password) {
         this.username = username;
