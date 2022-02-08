@@ -28,6 +28,6 @@ public class Vehicle extends BaseEntity {
     @JoinColumn(name = "customer_id")
     private Customer customer;
 
-    @OneToMany(mappedBy = "vehicle")
+    @OneToMany(mappedBy = "vehicle", cascade = CascadeType.REMOVE)
     private Set<Refuel> refuel;
 }
