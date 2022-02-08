@@ -23,7 +23,6 @@ public class Vehicle extends BaseEntity {
     private long mileage;
     @Enumerated(EnumType.STRING)
     private VehicleType type;
-    private int registrationYear;
 
     @ManyToOne
     @JoinColumn(name = "customer_id")

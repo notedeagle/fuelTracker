@@ -14,5 +14,4 @@ public class VehicleDto {
     private String plateNumber;
     private long mileage;
     private VehicleType vehicleType;
-    private int registrationYear;
 }

@@ -10,6 +10,7 @@ import java.time.LocalDateTime;
 @Getter
 @Setter
 public class RefuelDto {
+    private long id;
     private LocalDateTime date;
     private long odometer;
     private Fuel fuel;
