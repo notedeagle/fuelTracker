@@ -18,4 +18,5 @@ public class RefuelDto {
     private BigDecimal totalCost;
     private BigDecimal litres;
     private boolean fullTank;
+    private boolean freeTank;
 }
