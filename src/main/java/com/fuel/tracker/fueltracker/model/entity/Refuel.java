@@ -21,6 +21,7 @@ public class Refuel extends BaseEntity {
     private BigDecimal price;
     private BigDecimal totalCost;
     private BigDecimal litres;
+    private BigDecimal avg;
     private boolean fullTank;
     private boolean freeTank;
 

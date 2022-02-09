@@ -20,7 +20,6 @@ public class Vehicle extends BaseEntity {
     private String model;
     private int yearOfProduction;
     private String plateNumber;
-    private long mileage;
     @Enumerated(EnumType.STRING)
     private VehicleType type;
 
