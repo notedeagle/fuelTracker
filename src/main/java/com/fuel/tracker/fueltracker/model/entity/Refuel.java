@@ -3,8 +3,6 @@ package com.fuel.tracker.fueltracker.model.entity;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import org.hibernate.annotations.OnDelete;
-import org.hibernate.annotations.OnDeleteAction;
 
 import javax.persistence.*;
 import java.math.BigDecimal;
@@ -25,7 +23,7 @@ public class Refuel extends BaseEntity {
     private BigDecimal litres;
     private boolean fullTank;
 
-    @ManyToOne(cascade = CascadeType.REMOVE)
+    @ManyToOne
     @JoinColumn(name = "vehicle_id")
     private Vehicle vehicle;
 }
