@@ -22,6 +22,7 @@ public class Refuel extends BaseEntity {
     private BigDecimal totalCost;
     private BigDecimal litres;
     private boolean fullTank;
+    private boolean freeTank;
 
     @ManyToOne
     @JoinColumn(name = "vehicle_id")

@@ -20,15 +20,13 @@ public class Vehicle extends BaseEntity {
     private String model;
     private int yearOfProduction;
     private String plateNumber;
-    private long mileage;
     @Enumerated(EnumType.STRING)
     private VehicleType type;
-    private int registrationYear;
 
     @ManyToOne
     @JoinColumn(name = "customer_id")
     private Customer customer;
 
-    @OneToMany(mappedBy = "vehicle")
+    @OneToMany(mappedBy = "vehicle", cascade = CascadeType.REMOVE)
     private Set<Refuel> refuel;
 }
