@@ -6,6 +6,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
+import java.math.BigDecimal;
 import java.util.Set;
 
 @Getter
@@ -20,6 +21,7 @@ public class Vehicle extends BaseEntity {
     private String model;
     private int yearOfProduction;
     private String plateNumber;
+    private BigDecimal capacity;
     @Enumerated(EnumType.STRING)
     private VehicleType type;
 
@@ -29,4 +31,6 @@ public class Vehicle extends BaseEntity {
 
     @OneToMany(mappedBy = "vehicle", cascade = CascadeType.REMOVE)
     private Set<Refuel> refuel;
+    @OneToMany(mappedBy = "vehicle", cascade = CascadeType.REMOVE)
+    private Set<Expense> expense;
 }
