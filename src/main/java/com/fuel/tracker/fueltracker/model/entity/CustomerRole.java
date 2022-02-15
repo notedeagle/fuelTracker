@@ -1,6 +1,6 @@
 package com.fuel.tracker.fueltracker.model.entity;
 
-public enum UserRole {
+public enum CustomerRole {
     USER,
     ADMIN
 }

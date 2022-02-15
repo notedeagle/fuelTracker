@@ -28,7 +28,7 @@ public class Customer extends BaseEntity implements UserDetails {
     private boolean locked = false;
     private boolean enabled = true;
     @Enumerated(EnumType.STRING)
-    private UserRole userRole = UserRole.USER;
+    private CustomerRole userRole = CustomerRole.USER;
 
     @OneToMany(mappedBy = "customer")
     private Set<Vehicle> vehicles;
