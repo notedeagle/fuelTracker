@@ -18,7 +18,7 @@ public class Expense extends BaseEntity {
 
     private LocalDateTime date;
     private long odometer;
-    private BigDecimal totalPrice;
+    private BigDecimal totalCost;
     private String note;
 
     @ManyToOne
