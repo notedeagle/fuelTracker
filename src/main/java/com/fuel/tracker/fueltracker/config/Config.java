@@ -1,5 +1,7 @@
 package com.fuel.tracker.fueltracker.config;
 
+import com.fuel.tracker.fueltracker.utility.CostCalculator;
+import com.fuel.tracker.fueltracker.utility.DistanceCalculator;
 import org.modelmapper.ModelMapper;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -61,5 +63,15 @@ public class Config {
     @Bean
     public ModelMapper modelMapper() {
         return new ModelMapper();
+    }
+
+    @Bean
+    public CostCalculator costCalculator() {
+        return new CostCalculator();
+    }
+
+    @Bean
+    public DistanceCalculator distanceCalculator() {
+        return new DistanceCalculator();
     }
 }

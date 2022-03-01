@@ -32,7 +32,7 @@ public class VehicleController {
     }
 
     @GetMapping("/user")
-    public List<VehicleDto> findAllUserVehicle() {
+    public List<VehicleDto> findAllCustomerVehicle() {
         return vehicleService.getAllUserVehicles().stream()
                 .map(e -> mapper.map(e, VehicleDto.class))
                 .collect(Collectors.toList());
@@ -42,7 +42,7 @@ public class VehicleController {
     public ResponseEntity<VehicleDto> addVehicle(@RequestBody VehicleDto vehicleDto) {
         String email = SecurityContextHolder.getContext().getAuthentication().getName();
         Vehicle vehicle = mapper.map(vehicleDto, Vehicle.class);
-        boolean vehicleExists = vehicleRepository.findVehicleByNameAndAndCustomerId(vehicleDto.getName(),
+        boolean vehicleExists = vehicleRepository.findVehicleByNameAndCustomerId(vehicleDto.getName(),
                 customerRepository.findByEmail(email).orElseThrow().getId()).isPresent();
 
         if (vehicleExists) {
