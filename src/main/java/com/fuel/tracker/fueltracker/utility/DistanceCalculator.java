@@ -25,9 +25,23 @@ public class DistanceCalculator {
 
     public BigDecimal calculateDistancePerDay(List<Refuel> refuels, List<Expense> expenses) {
         long totalDistance = calculateTotalDistance(refuels, expenses);
-        calculateAmountOfDays(refuels, expenses);
 
         return BigDecimal.valueOf(totalDistance).divide(calculateAmountOfDays(refuels, expenses), RoundingMode.HALF_UP);
+    }
+
+    public long calculateTotalDistance(List<Refuel> refuels) {
+        List<Long> distances = new ArrayList<>();
+
+        refuels.forEach(refuel -> distances.add(refuel.getOdometer()));
+        Collections.sort(distances);
+
+        return distances.get(distances.size() - 1) - distances.get(0);
+    }
+
+    public BigDecimal calculateDistancePerDay(List<Refuel> refuels) {
+        long totalDistance = calculateTotalDistance(refuels);
+
+        return BigDecimal.valueOf(totalDistance).divide(calculateAmountOfDays(refuels), RoundingMode.HALF_UP);
     }
 
     public BigDecimal calculateAmountOfDays(List<Refuel> refuels, List<Expense> expenses) {
@@ -35,6 +49,17 @@ public class DistanceCalculator {
 
         refuels.forEach(refuel -> dateTimes.add(refuel.getDate()));
         expenses.forEach(expense -> dateTimes.add(expense.getDate()));
+
+        Collections.sort(dateTimes);
+
+        long duration = ChronoUnit.DAYS.between(dateTimes.get(0).toLocalDate(), dateTimes.get(dateTimes.size() - 1).toLocalDate());
+        return BigDecimal.valueOf(duration);
+    }
+
+    public BigDecimal calculateAmountOfDays(List<Refuel> refuels) {
+        List<LocalDateTime> dateTimes = new ArrayList<>();
+
+        refuels.forEach(refuel -> dateTimes.add(refuel.getDate()));
 
         Collections.sort(dateTimes);
 
