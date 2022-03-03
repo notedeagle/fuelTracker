@@ -48,36 +48,6 @@ public class CostCalculator {
         return costPerMonthSet;
     }
 
-    public BigDecimal calculateTotalCost(List<Refuel> refuels) {
-        return refuels.stream()
-                .map(Refuel::getTotalCost)
-                .reduce(BigDecimal.ZERO, BigDecimal::add);
-    }
-
-    public BigDecimal calculateTotalCostPerDay(List<Refuel> refuels) {
-        BigDecimal totalCost = calculateTotalCost(refuels);
-        return totalCost.divide(distanceCalculator.calculateAmountOfDays(refuels), RoundingMode.HALF_UP);
-    }
-
-    public BigDecimal calculateTotalCostPerKm(List<Refuel> refuels) {
-        return calculateTotalCost(refuels).divide(BigDecimal.valueOf(distanceCalculator.calculateTotalDistance(refuels)),
-                RoundingMode.HALF_UP);
-    }
-
-    public Set<CostPerMonth> getCostPerMonth(List<Refuel> refuels) {
-        Set<CostPerMonth> costPerMonthSet = new HashSet<>();
-        Set<Integer> month = new HashSet<>();
-
-        refuels.forEach(refuel -> month.add(refuel.getDate().getMonthValue()));
-
-        month.forEach(monthNumber -> costPerMonthSet.add(CostPerMonth.builder()
-                .monthNumber(monthNumber)
-                .totalCost(getTotalCostPerMonth(refuels, monthNumber))
-                .build()));
-
-        return costPerMonthSet;
-    }
-
     private BigDecimal getTotalCostPerMonth(List<Refuel> refuels, List<Expense> expenses, int monthNumber) {
         BigDecimal totalCostRefuels = refuels.stream()
                 .filter(c -> c.getDate().getMonthValue() == monthNumber)
@@ -90,12 +60,5 @@ public class CostCalculator {
                 .reduce(BigDecimal.ZERO, BigDecimal::add);
 
         return totalCostRefuels.add(totalCostExpense);
-    }
-
-    private BigDecimal getTotalCostPerMonth(List<Refuel> refuels, int monthNumber) {
-        return refuels.stream()
-                .filter(c -> c.getDate().getMonthValue() == monthNumber)
-                .map(Refuel::getTotalCost)
-                .reduce(BigDecimal.ZERO, BigDecimal::add);
     }
 }
