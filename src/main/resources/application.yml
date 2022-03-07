@@ -1,39 +1,12 @@
+spring:
+  profiles:
+    active: prod
+
 #SERVER
 server:
   port: 8081
   error:
-    include-message: always
-
-logging:
-  level:
-    org:
-      springframework:
-        web: DEBUG
-      hibernate:
-        SQL: debug
-
-#DATABASELOCAL
-spring:
-  datasource:
-    url: jdbc:postgresql://localhost:6432/fuelTracker
-    username: admin
-    password: pass123
-  jpa:
-    properties:
-      hibernate:
-        jdbc:
-          lob:
-            non_contextual_creation: true
-        ddl-auto: update
-    database-platform: org.hibernate.dialect.PostgreSQLDialect
-  mvc:
-    pathmatch:
-      matching-strategy: ant_path_matcher
-
-#DATABASE
-#spring.datasource.url=jdbc:postgresql://ec2-18-202-156-92.eu-west-1.compute.amazonaws.com:5432/ddv9p82g9resm6
-#spring.datasource.username=hvxwxrirsbsmvl
-#spring.datasource.password=db91f55e7d3aab1793a674958ea6418ca9e9b342f613508ffd4c177efe5907e2
+    include-message: never
 
 #JWT
 jwt:
