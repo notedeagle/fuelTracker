@@ -1,8 +1,6 @@
 spring:
   profiles:
     active: prod
-  flyway:
-    baseline-on-migrate: true
 
 #SERVER
 server:
