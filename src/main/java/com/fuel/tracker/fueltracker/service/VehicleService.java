@@ -1,24 +1,27 @@
 package com.fuel.tracker.fueltracker.service;
 
+import com.fuel.tracker.fueltracker.model.dto.VehicleDto;
 import com.fuel.tracker.fueltracker.model.entity.Vehicle;
 import com.fuel.tracker.fueltracker.repository.CustomerRepository;
 import com.fuel.tracker.fueltracker.repository.VehicleRepository;
 import lombok.AllArgsConstructor;
+import org.modelmapper.ModelMapper;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
-@AllArgsConstructor
-public class VehicleService {
+public record VehicleService(VehicleRepository vehicleRepository,
+                             CustomerRepository customerRepository,
+                             ModelMapper mapper) {
 
-    private final VehicleRepository vehicleRepository;
-    private final CustomerRepository customerRepository;
-
-    public List<Vehicle> getAllVehicles() {
-        return vehicleRepository.findAll();
+    public List<VehicleDto> getAllVehicles() {
+        return vehicleRepository.findAll().stream()
+                .map(vehicle -> mapper.map(vehicle, VehicleDto.class))
+                .collect(Collectors.toList());
     }
 
     public List<Vehicle> getAllUserVehicles() {

@@ -9,6 +9,7 @@ import com.fuel.tracker.fueltracker.service.RefuelService;
 import com.fuel.tracker.fueltracker.service.VehicleService;
 import lombok.AllArgsConstructor;
 import org.modelmapper.ModelMapper;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -55,6 +56,7 @@ public class RefuelController {
         return mapper.map(refuelService.addRefuel(refuel, vehicleName), RefuelDto.class);
     }
 
+    @Transactional
     @DeleteMapping("/{refuelId}")
     public void deleteRefuel(@PathVariable long refuelId) {
         refuelService.deleteRefuel(refuelId);

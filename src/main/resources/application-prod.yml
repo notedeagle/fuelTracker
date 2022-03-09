@@ -19,7 +19,7 @@ spring:
         jdbc:
           lob:
             non_contextual_creation: true
-        ddl-auto: update
+        ddl-auto: validate
     database-platform: org.hibernate.dialect.PostgreSQLDialect
   mvc:
     pathmatch:
