@@ -53,6 +53,10 @@ public class DistanceCalculator {
         Collections.sort(dateTimes);
 
         long duration = ChronoUnit.DAYS.between(dateTimes.get(0).toLocalDate(), dateTimes.get(dateTimes.size() - 1).toLocalDate());
+
+        if (duration == 0) {
+            return BigDecimal.ONE;
+        }
         return BigDecimal.valueOf(duration);
     }
 
