@@ -1,0 +1,14 @@
+spring:
+  profiles:
+    active: prod
+
+#SERVER
+server:
+  port: 8081
+  error:
+    include-message: never
+
+#JWT
+jwt:
+  expirationTime: 400000000000
+  secret: '*e!lPHt0HP+}/z3:Yg`DFBIJEh-W!zGhdJqL8_,#Z0:+1bI4>z=Lm}S%i?5Jf'

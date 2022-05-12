@@ -7,6 +7,7 @@ import com.fuel.tracker.fueltracker.service.ExpenseService;
 import com.fuel.tracker.fueltracker.service.VehicleService;
 import lombok.AllArgsConstructor;
 import org.modelmapper.ModelMapper;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -36,6 +37,7 @@ public class ExpenseController {
         return mapper.map(expenseService.addExpense(expense, vehicleName), ExpenseDto.class);
     }
 
+    @Transactional
     @DeleteMapping("/{expenseId}")
     public void deleteExpense(@PathVariable long expenseId) {
         expenseService.deleteExpense(expenseId);

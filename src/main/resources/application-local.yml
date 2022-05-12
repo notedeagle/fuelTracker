@@ -1,0 +1,28 @@
+#LOGGING
+logging:
+  level:
+    org:
+      springframework:
+        web: DEBUG
+      hibernate:
+        SQL: debug
+
+#DATABASELOCAL
+spring:
+  datasource:
+    url: jdbc:postgresql://localhost:6432/fuelTracker
+    username: admin
+    password: pass123
+  jpa:
+    properties:
+      hibernate:
+        jdbc:
+          lob:
+            non_contextual_creation: true
+        ddl-auto: validate
+    database-platform: org.hibernate.dialect.PostgreSQLDialect
+  mvc:
+    pathmatch:
+      matching-strategy: ant_path_matcher
+
+
