@@ -1,3 +1,9 @@
-FROM openjdk:17-oracle
-ADD target/fuelTracker-0.0.2-SNAPSHOT.jar .
-CMD java -jar fuelTracker-0.0.2-SNAPSHOT.jar --envname=prod
+FROM openjdk:17
+WORKDIR /app
+COPY ./.mvn .mvn
+COPY ./mvnw pom.xml ./
+RUN  chmod +x mvnw && ./mvnw dependency:go-offline
+
+COPY ./src ./src
+
+CMD ["./mvnw", "spring-boot:run"]
