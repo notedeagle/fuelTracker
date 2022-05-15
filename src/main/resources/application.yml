@@ -4,7 +4,6 @@ spring:
 
 #SERVER
 server:
-  port: 8081
   error:
     include-message: never
 
