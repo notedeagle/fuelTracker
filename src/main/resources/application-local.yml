@@ -13,14 +13,11 @@ spring:
     url: jdbc:postgresql://localhost:6432/fuelTracker
     username: admin
     password: pass123
+
   jpa:
-    properties:
-      hibernate:
-        jdbc:
-          lob:
-            non_contextual_creation: true
-        ddl-auto: validate
-    database-platform: org.hibernate.dialect.PostgreSQLDialect
+    hibernate:
+      ddl-auto: validate
+
   mvc:
     pathmatch:
       matching-strategy: ant_path_matcher

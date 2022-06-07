@@ -5,9 +5,9 @@ import com.fuel.tracker.fueltracker.model.dto.Dates;
 import com.fuel.tracker.fueltracker.model.entity.Expense;
 import com.fuel.tracker.fueltracker.model.entity.Refuel;
 import com.fuel.tracker.fueltracker.model.entity.Vehicle;
-import com.fuel.tracker.fueltracker.utility.CostCalculator;
-import com.fuel.tracker.fueltracker.utility.DateCalculator;
-import com.fuel.tracker.fueltracker.utility.DistanceCalculator;
+import com.fuel.tracker.fueltracker.utils.CostCalculator;
+import com.fuel.tracker.fueltracker.utils.DateCalculator;
+import com.fuel.tracker.fueltracker.utils.DistanceCalculator;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;

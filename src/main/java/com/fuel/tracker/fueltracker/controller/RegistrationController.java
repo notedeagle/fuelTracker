@@ -10,6 +10,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import javax.validation.Valid;
+
 @RestController
 @AllArgsConstructor
 public class RegistrationController {
@@ -18,7 +20,7 @@ public class RegistrationController {
     private final CustomerRepository customerRepository;
 
     @PostMapping("/register")
-    public ResponseEntity<String> register(@RequestBody RegistrationCredentials request) {
+    public ResponseEntity<String> register(@Valid @RequestBody RegistrationCredentials request) {
         boolean userUsernameExist = customerRepository.findByUsername(request.getUsername()).isPresent();
         boolean userEmailExist = customerRepository.findByEmail(request.getEmail()).isPresent();
 

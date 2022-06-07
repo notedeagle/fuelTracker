@@ -1,4 +1,4 @@
-package com.fuel.tracker.fueltracker.utility;
+package com.fuel.tracker.fueltracker.utils;
 
 import com.fuel.tracker.fueltracker.model.dto.Dates;
 import com.fuel.tracker.fueltracker.model.entity.Expense;

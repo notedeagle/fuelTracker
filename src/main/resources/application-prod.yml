@@ -17,14 +17,11 @@ spring:
     username: hvxwxrirsbsmvl
     password: db91f55e7d3aab1793a674958ea6418ca9e9b342f613508ffd4c177efe5907e2
     maxActive: 5
+
   jpa:
-    properties:
-      hibernate:
-        jdbc:
-          lob:
-            non_contextual_creation: true
-        ddl-auto: validate
-    database-platform: org.hibernate.dialect.PostgreSQLDialect
+    hibernate:
+      ddl-auto: validate
+
   mvc:
     pathmatch:
       matching-strategy: ant_path_matcher

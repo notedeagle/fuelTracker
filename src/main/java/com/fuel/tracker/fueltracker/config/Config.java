@@ -1,8 +1,8 @@
 package com.fuel.tracker.fueltracker.config;
 
-import com.fuel.tracker.fueltracker.utility.CostCalculator;
-import com.fuel.tracker.fueltracker.utility.DateCalculator;
-import com.fuel.tracker.fueltracker.utility.DistanceCalculator;
+import com.fuel.tracker.fueltracker.utils.CostCalculator;
+import com.fuel.tracker.fueltracker.utils.DateCalculator;
+import com.fuel.tracker.fueltracker.utils.DistanceCalculator;
 import org.modelmapper.ModelMapper;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

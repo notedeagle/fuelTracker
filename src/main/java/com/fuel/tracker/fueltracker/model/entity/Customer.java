@@ -1,9 +1,7 @@
 package com.fuel.tracker.fueltracker.model.entity;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import com.fuel.tracker.fueltracker.model.dto.CustomerUpdateDto;
+import lombok.*;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -13,8 +11,8 @@ import java.util.Collection;
 import java.util.Collections;
 import java.util.Set;
 
-@Getter
-@Setter
+@Data
+@EqualsAndHashCode(callSuper = false)
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
@@ -25,12 +23,13 @@ public class Customer extends BaseEntity implements UserDetails {
     private String firstname;
     private String lastname;
     private String password;
-    private boolean locked = false;
-    private boolean enabled = true;
+    private boolean locked;
+    private boolean enabled;
+
     @Enumerated(EnumType.STRING)
     private CustomerRole userRole = CustomerRole.USER;
 
-    @OneToMany(mappedBy = "customer")
+    @OneToMany(mappedBy = "customer", cascade = CascadeType.REMOVE)
     private Set<Vehicle> vehicles;
 
     public Customer(String username, String email, String firstName, String lastname, String password) {
@@ -39,6 +38,20 @@ public class Customer extends BaseEntity implements UserDetails {
         this.firstname = firstName;
         this.lastname = lastname;
         this.password = password;
+    }
+
+    @Override
+    void prePersist() {
+        super.prePersist();
+        locked = false;
+        enabled = true;
+    }
+
+    public void updateFrom(final CustomerUpdateDto source) {
+        username = source.getUsername();
+        email = source.getEmail();
+        firstname = source.getFirstName();
+        lastname = source.getLastName();
     }
 
     @Override
