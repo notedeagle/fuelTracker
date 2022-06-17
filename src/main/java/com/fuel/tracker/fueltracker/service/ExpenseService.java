@@ -15,7 +15,7 @@ public record ExpenseService(ExpenseRepository expenseRepository,
     }
 
     public Expense addExpense(Expense expense, String vehicleName) {
-        expense.setVehicle(vehicleService.getVehicleByName(vehicleName));
+        expense.setVehicle(vehicleService.getCustomerVehicleByName(vehicleName));
         return expenseRepository.save(expense);
     }
 

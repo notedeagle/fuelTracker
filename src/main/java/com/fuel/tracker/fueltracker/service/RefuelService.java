@@ -17,7 +17,7 @@ public record RefuelService(RefuelRepository refuelRepository,
     }
 
     public Refuel addRefuel(Refuel refuel, String vehicleName) {
-        refuel.setVehicle(vehicleService.getVehicleByName(vehicleName));
+        refuel.setVehicle(vehicleService.getCustomerVehicleByName(vehicleName));
         return refuelRepository.save(refuel);
     }
 
@@ -30,7 +30,7 @@ public record RefuelService(RefuelRepository refuelRepository,
     }
 
     public BigDecimal calculateCharging(double startLvl, double endLvl, String vehicleName) {
-        BigDecimal capacity = vehicleService.getVehicleByName(vehicleName).getCapacity();
+        BigDecimal capacity = vehicleService.getCustomerVehicleByName(vehicleName).getCapacity();
         BigDecimal chargingLvl = BigDecimal.valueOf(endLvl - startLvl);
 
         return capacity.multiply(chargingLvl.divide(BigDecimal.valueOf(100), RoundingMode.HALF_UP));

@@ -26,7 +26,7 @@ public class RefuelController {
 
     @GetMapping("/{vehicleName}")
     public List<RefuelDto> findAllRefuelByVehicleName(@PathVariable String vehicleName) {
-        Vehicle vehicle = vehicleService.getVehicleByName(vehicleName);
+        Vehicle vehicle = vehicleService.getCustomerVehicleByName(vehicleName);
         return refuelService.getAllCarRefuel(vehicle.getId()).stream()
                 .map(v -> mapper.map(v, RefuelDto.class))
                 .collect(Collectors.toList());

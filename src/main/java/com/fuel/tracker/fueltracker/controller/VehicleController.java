@@ -55,6 +55,6 @@ public class VehicleController {
     @Transactional
     @DeleteMapping("/{vehicleName}")
     public void deleteVehicle(@PathVariable String vehicleName) {
-        vehicleService.deleteVehicle(vehicleName);
+        vehicleService.deleteCustomerVehicleByName(vehicleName);
     }
 }

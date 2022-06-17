@@ -1,5 +1,6 @@
 package com.fuel.tracker.fueltracker.model.dto;
 
+import com.fuel.tracker.fueltracker.model.entity.Vehicle;
 import com.fuel.tracker.fueltracker.model.entity.VehicleType;
 import lombok.Getter;
 import lombok.Setter;
@@ -19,4 +20,14 @@ public class VehicleDto {
     private String plateNumber;
     @Enumerated(EnumType.STRING)
     private VehicleType vehicleType;
+
+    public VehicleDto(Vehicle vehicle) {
+        this.name = vehicle.getName();
+        this.brand = vehicle.getBrand();
+        this.model = vehicle.getModel();
+        this.capacity = vehicle.getCapacity();
+        this.yearOfProduction = vehicle.getYearOfProduction();
+        this.plateNumber = vehicle.getPlateNumber();
+        this.vehicleType = vehicle.getType();
+    }
 }

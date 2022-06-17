@@ -24,7 +24,7 @@ public class ExpenseController {
 
     @GetMapping("/{vehicleName}")
     public List<ExpenseDto> findAllExpensesByVehicleName(@PathVariable String vehicleName) {
-        Vehicle vehicle = vehicleService.getVehicleByName(vehicleName);
+        Vehicle vehicle = vehicleService.getCustomerVehicleByName(vehicleName);
 
         return expenseService.getAllExpenses(vehicle.getId()).stream()
                 .map(v -> mapper.map(v, ExpenseDto.class))
