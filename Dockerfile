@@ -1,4 +1,5 @@
 FROM openjdk:17
+LABEL maintainer="notedeagle"
 WORKDIR /app
 COPY ./.mvn .mvn
 COPY ./mvnw pom.xml ./

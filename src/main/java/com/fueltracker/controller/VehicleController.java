@@ -1,0 +1,40 @@
+package com.fueltracker.controller;
+
+import com.fueltracker.model.dto.VehicleDto;
+import com.fueltracker.service.VehicleService;
+import lombok.AllArgsConstructor;
+import org.springframework.http.ResponseEntity;
+import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
+
+@AllArgsConstructor
+@RestController
+@RequestMapping("/vehicle")
+public class VehicleController {
+    private final VehicleService vehicleService;
+
+    @GetMapping
+    public ResponseEntity<List<VehicleDto>> findAllVehicle() {
+        return ResponseEntity.ok(vehicleService.getAllVehicles());
+    }
+
+    @GetMapping("/user")
+    public List<VehicleDto> findAllCustomerVehicle() {
+        return vehicleService.getAllUserVehicles().stream()
+                .map(VehicleDto::new)
+                .toList();
+    }
+
+    @PostMapping
+    public VehicleDto addVehicle(@RequestBody VehicleDto vehicleDto) throws IllegalArgumentException {
+        return vehicleService.addVehicle(vehicleDto);
+    }
+
+    @Transactional
+    @DeleteMapping("/{vehicleName}")
+    public void deleteVehicle(@PathVariable String vehicleName) throws IllegalArgumentException {
+        vehicleService.deleteCustomerVehicleByName(vehicleName);
+    }
+}
