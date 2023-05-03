@@ -29,9 +29,9 @@ public class CustomerService implements UserDetailsService {
     }
 
     @Override
-    public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
-        return customerRepository.findByEmail(email).orElseThrow(() ->
-                new UsernameNotFoundException(String.format(USER_NOT_FOUND_MSG, email)));
+    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+        return customerRepository.findByUsername(username).orElseThrow(() ->
+                new UsernameNotFoundException(String.format(USER_NOT_FOUND_MSG, username)));
     }
 
     @Transactional

@@ -11,7 +11,7 @@ logging:
 spring:
   datasource:
     url: jdbc:postgresql://localhost:6432/fuelTracker
-    username: admin
+    username: fuelTracker
     password: pass123
 
   jpa:

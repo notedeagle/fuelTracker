@@ -54,9 +54,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-        auth.jdbcAuthentication()
-                .usersByUsernameQuery("select email, password, enabled from user where email = ?");
-
         auth.authenticationProvider(daoAuthenticationProvider());
     }
 
