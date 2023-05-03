@@ -5,10 +5,10 @@ import com.fueltracker.model.entity.Customer;
 import com.fueltracker.model.entity.Vehicle;
 import com.fueltracker.repository.CustomerRepository;
 import com.fueltracker.repository.VehicleRepository;
+import jakarta.persistence.EntityNotFoundException;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
-import javax.persistence.EntityNotFoundException;
 import java.util.List;
 
 @Service
