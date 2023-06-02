@@ -20,7 +20,7 @@ public class CustomerController {
     private final CustomerService customerService;
 
     @PutMapping("/customer/{id}")
-    ResponseEntity updateCustomer(@PathVariable long id, @RequestBody @Valid CustomerUpdateDto customer) {
+    ResponseEntity<Object> updateCustomer(@PathVariable long id, @RequestBody @Valid CustomerUpdateDto customer) {
         return customerService.editCustomer(id, customer);
     }
 }

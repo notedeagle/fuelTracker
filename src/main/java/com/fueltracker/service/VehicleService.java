@@ -21,9 +21,9 @@ public record VehicleService(VehicleRepository vehicleRepository, CustomerReposi
     }
 
     public List<Vehicle> getAllUserVehicles() {
-        String email = SecurityContextHolder.getContext().getAuthentication().getName();
-        long userId = customerRepository.findByEmail(email)
-                .orElseThrow(() -> new IllegalArgumentException("Customer with given email not found"))
+        String username = SecurityContextHolder.getContext().getAuthentication().getName();
+        long userId = customerRepository.findByUsername(username)
+                .orElseThrow(() -> new IllegalArgumentException("Customer with given username not found"))
                 .getId();
 
         return vehicleRepository.findAllByCustomerId(userId)
@@ -31,8 +31,8 @@ public record VehicleService(VehicleRepository vehicleRepository, CustomerReposi
     }
 
     public VehicleDto addVehicle(VehicleDto source) {
-        String email = SecurityContextHolder.getContext().getAuthentication().getName();
-        Customer customer = customerRepository.findByEmail(email)
+        String username = SecurityContextHolder.getContext().getAuthentication().getName();
+        Customer customer = customerRepository.findByUsername(username)
                 .orElseThrow(() -> new EntityNotFoundException("Customer with given id not found."));
 
         vehicleRepository.findVehicleByNameAndCustomerId(source.getName(), customer.getId())
