@@ -32,6 +32,10 @@ public class Refuel extends BaseEntity {
     private Boolean fullTank;
     @NotNull(message = "Free tank must not be blank.")
     private Boolean freeTank;
+    @NotNull(message = "Latitude must not be null")
+    private Double latitude;
+    @NotNull(message = "Longitude must not be null")
+    private Double longitude;
 
     @ManyToOne
     @JoinColumn(name = "vehicle_id")

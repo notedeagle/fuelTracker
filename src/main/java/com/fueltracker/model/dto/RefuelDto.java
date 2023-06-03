@@ -19,4 +19,6 @@ public class RefuelDto {
     private BigDecimal litres;
     private boolean fullTank;
     private boolean freeTank;
+    private double latitude;
+    private double longitude;
 }
