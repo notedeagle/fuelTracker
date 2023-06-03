@@ -2,6 +2,7 @@ package com.fueltracker.controller;
 
 import com.fueltracker.model.dto.VehicleDto;
 import com.fueltracker.service.VehicleService;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import lombok.AllArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.transaction.annotation.Transactional;
@@ -12,6 +13,7 @@ import java.util.List;
 @AllArgsConstructor
 @RestController
 @RequestMapping("/vehicle")
+@SecurityRequirement(name = "bearerAuth")
 public class VehicleController {
     private final VehicleService vehicleService;
 

@@ -7,6 +7,7 @@ import com.fueltracker.model.entity.Refuel;
 import com.fueltracker.model.entity.Vehicle;
 import com.fueltracker.service.RefuelService;
 import com.fueltracker.service.VehicleService;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import lombok.AllArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.transaction.annotation.Transactional;
@@ -18,6 +19,7 @@ import java.util.stream.Collectors;
 @AllArgsConstructor
 @RestController
 @RequestMapping("/refuel")
+@SecurityRequirement(name = "bearerAuth")
 public class RefuelController {
 
     private final RefuelService refuelService;

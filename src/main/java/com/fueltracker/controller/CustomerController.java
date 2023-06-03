@@ -2,6 +2,8 @@ package com.fueltracker.controller;
 
 import com.fueltracker.service.CustomerService;
 import com.fueltracker.model.dto.CustomerUpdateDto;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
+import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -9,16 +11,16 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
-import javax.validation.Valid;
 
 @RestController
 @AllArgsConstructor
+@SecurityRequirement(name = "bearerAuth")
 public class CustomerController {
 
     private final CustomerService customerService;
 
     @PutMapping("/customer/{id}")
-    ResponseEntity updateCustomer(@PathVariable long id, @RequestBody @Valid CustomerUpdateDto customer) {
+    ResponseEntity<Object> updateCustomer(@PathVariable long id, @RequestBody @Valid CustomerUpdateDto customer) {
         return customerService.editCustomer(id, customer);
     }
 }

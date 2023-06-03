@@ -2,12 +2,12 @@ package com.fueltracker.model.dto;
 
 import com.fueltracker.model.entity.Vehicle;
 import com.fueltracker.model.entity.VehicleType;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
 import java.math.BigDecimal;
 
 @Getter

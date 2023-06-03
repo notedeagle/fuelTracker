@@ -1,22 +1,25 @@
 package com.fueltracker.controller;
 
+import com.fueltracker.config.security.AuthenticationResponse;
+import com.fueltracker.config.security.LoginCredentials;
 import com.fueltracker.config.security.RegistrationCredentials;
 import com.fueltracker.repository.CustomerRepository;
+import com.fueltracker.service.CustomerService;
 import com.fueltracker.service.RegistrationService;
+import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
-import javax.validation.Valid;
 
 @RestController
 @AllArgsConstructor
-public class RegistrationController {
+@RequestMapping("/auth")
+public class AuthorizationController {
 
     private final RegistrationService registrationService;
+    private final CustomerService customerService;
     private final CustomerRepository customerRepository;
 
     @PostMapping("/register")
@@ -32,5 +35,15 @@ public class RegistrationController {
             registrationService.register(request);
             return ResponseEntity.status(HttpStatus.OK).body("Account created.");
         }
+    }
+
+    @PostMapping("/login")
+    public ResponseEntity<AuthenticationResponse> login(@RequestBody LoginCredentials credentials) {
+        return ResponseEntity.ok(customerService.authenticate(credentials));
+    }
+
+    @GetMapping("/secured")
+    public String secured() {
+        return "secured";
     }
 }

@@ -1,13 +1,14 @@
 package com.fueltracker.model.entity;
 
 import com.fueltracker.model.dto.VehicleDto;
+import jakarta.persistence.*;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 
-import javax.persistence.*;
-import javax.validation.constraints.NotBlank;
 import java.math.BigDecimal;
 import java.util.Set;
 
@@ -25,9 +26,9 @@ public class Vehicle extends BaseEntity {
     private String model;
     private int yearOfProduction;
     private String plateNumber;
-    @NotBlank(message = "Tank capacity must not be blank.")
+    @NotNull(message = "Tank capacity must not be blank.")
     private BigDecimal capacity;
-    @NotBlank(message = "Vehicle type must not be blank.")
+    @NotNull(message = "Vehicle type must not be blank.")
     @Enumerated(EnumType.STRING)
     private VehicleType type;
 
