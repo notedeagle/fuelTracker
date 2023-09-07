@@ -7,21 +7,10 @@ logging:
       hibernate:
         SQL: info
 
-server:
-  port: ${PORT:8080}
-
 #DATABASE
 spring:
-  datasource:
-    url: jdbc:postgresql://ec2-54-228-218-84.eu-west-1.compute.amazonaws.com:5432/dcmleuscgsj47g
-    username: cktqfjmjflhxii
-    password: 4b64d9d88924eb519ea4e8409d43c6bda09459a9e114ca4742c1e81904aaa383
-    maxActive: 5
-
-  jpa:
-    hibernate:
-      ddl-auto: validate
-
-  mvc:
-    pathmatch:
-      matching-strategy: ant_path_matcher
+#  datasource:
+#    url:
+#    username:
+#    password:
+#    maxActive:

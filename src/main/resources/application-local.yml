@@ -10,16 +10,6 @@ logging:
 #DATABASELOCAL
 spring:
   datasource:
-    url: jdbc:postgresql://localhost:6432/fuelTracker
+    url: jdbc:postgresql://localhost:5432/fuelTracker
     username: fuelTracker
-    password: pass123
-
-  jpa:
-    hibernate:
-      ddl-auto: validate
-
-  mvc:
-    pathmatch:
-      matching-strategy: ant_path_matcher
-
-
+    password: fuelTracker
