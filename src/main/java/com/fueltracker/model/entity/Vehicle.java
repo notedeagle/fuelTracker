@@ -5,29 +5,42 @@ import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.EqualsAndHashCode;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 
+import java.io.Serial;
+import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.Set;
 
-@Data
-@EqualsAndHashCode(callSuper = false)
+@Getter
+@Setter
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-public class Vehicle extends BaseEntity {
+public class Vehicle extends BaseEntity implements Serializable {
+
+    @Serial
+    @Transient
+    private static final long serialVersionUID = -1282242912816936305L;
+
     @NotBlank(message = "Name must not be blank.")
     private String name;
+
     @NotBlank(message = "Vehicle brand must not be blank.")
     private String brand;
+
     @NotBlank(message = "Model must not be blank.")
     private String model;
+
     private int yearOfProduction;
+
     private String plateNumber;
+
     @NotNull(message = "Tank capacity must not be blank.")
     private BigDecimal capacity;
+
     @NotNull(message = "Vehicle type must not be blank.")
     @Enumerated(EnumType.STRING)
     private VehicleType type;

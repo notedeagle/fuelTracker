@@ -3,19 +3,26 @@ package com.fueltracker.model.entity;
 import jakarta.persistence.Entity;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
+import jakarta.persistence.Transient;
 import jakarta.validation.constraints.NotBlank;
-import lombok.Data;
-import lombok.EqualsAndHashCode;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 
+import java.io.Serial;
+import java.io.Serializable;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
-@Data
-@EqualsAndHashCode(callSuper = false)
+@Getter
+@Setter
 @NoArgsConstructor
 @Entity
-public class Expense extends BaseEntity {
+public class Expense extends BaseEntity implements Serializable {
+
+    @Serial
+    @Transient
+    private static final long serialVersionUID = 2985438157612673779L;
 
     @NotBlank(message = "Date must not be blank.")
     private LocalDateTime date;

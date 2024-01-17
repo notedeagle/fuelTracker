@@ -30,10 +30,10 @@ public class CustomerService implements UserDetailsService {
     private final AuthenticationManager authenticationManager;
     private final JwtUtils jwtUtils;
 
-    public void singUpUser(Customer user) {
-        String encodedPassword = bCryptPasswordEncoder.encode(user.getPassword());
-        user.setPassword(encodedPassword);
-        customerRepository.save(user);
+    public void singUpUser(Customer customer) {
+        String encodedPassword = bCryptPasswordEncoder.encode(customer.getPassword());
+        customer.setPassword(encodedPassword);
+        customerRepository.save(customer);
     }
 
     public AuthenticationResponse authenticate(LoginCredentials loginCredentials) {
