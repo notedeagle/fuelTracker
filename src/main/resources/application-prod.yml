@@ -6,11 +6,3 @@ logging:
         web: info
       hibernate:
         SQL: info
-
-#DATABASE
-spring:
-#  datasource:
-#    url:
-#    username:
-#    password:
-#    maxActive:

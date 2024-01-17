@@ -7,16 +7,20 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
+import java.io.Serial;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.Set;
 
-@Data
-@EqualsAndHashCode(callSuper = false)
+@Setter
+@Getter
 @NoArgsConstructor
-@AllArgsConstructor
 @Entity
 public class Customer extends BaseEntity implements UserDetails {
+
+    @Serial
+    @Transient
+    private static final long serialVersionUID = 8132281207583508963L;
 
     private String username;
     private String email;
