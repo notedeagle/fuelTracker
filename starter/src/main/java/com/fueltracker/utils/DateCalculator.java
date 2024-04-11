@@ -1,8 +1,9 @@
 package com.fueltracker.utils;
 
-import com.fueltracker.model.dto.Dates;
-import com.fueltracker.model.entity.Expense;
-import com.fueltracker.model.entity.Refuel;
+
+import persistance.dto.Dates;
+import persistance.entity.Expense;
+import persistance.entity.Refuel;
 
 import java.time.LocalDate;
 import java.util.ArrayList;

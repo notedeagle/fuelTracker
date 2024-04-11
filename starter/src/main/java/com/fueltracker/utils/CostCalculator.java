@@ -1,8 +1,9 @@
 package com.fueltracker.utils;
 
-import com.fueltracker.model.dto.CostPerMonth;
-import com.fueltracker.model.entity.Expense;
-import com.fueltracker.model.entity.Refuel;
+
+import persistance.dto.CostPerMonth;
+import persistance.entity.Expense;
+import persistance.entity.Refuel;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;

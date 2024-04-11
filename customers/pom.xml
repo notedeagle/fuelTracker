@@ -9,8 +9,8 @@
         <version>0.0.2-SNAPSHOT</version>
     </parent>
 
-    <groupId>com.fuelTracker.starter</groupId>
-    <artifactId>starter</artifactId>
+    <groupId>com.fuelTracker.customers</groupId>
+    <artifactId>customers</artifactId>
 
     <properties>
         <maven.compiler.source>17</maven.compiler.source>
@@ -19,8 +19,14 @@
     </properties>
     <dependencies>
         <dependency>
-            <groupId>com.fuelTracker.customers</groupId>
-            <artifactId>customers</artifactId>
+            <groupId>com.fuelTracker.vehicles</groupId>
+            <artifactId>vehicles</artifactId>
+            <version>0.0.2-SNAPSHOT</version>
+            <scope>compile</scope>
+        </dependency>
+        <dependency>
+            <groupId>com.fuelTracker.persistance</groupId>
+            <artifactId>persistence</artifactId>
             <version>0.0.2-SNAPSHOT</version>
             <scope>compile</scope>
         </dependency>
