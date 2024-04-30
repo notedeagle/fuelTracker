@@ -1,6 +1,10 @@
 package vehicles;
 
 import jakarta.persistence.EntityNotFoundException;
+import lombok.AllArgsConstructor;
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.CachePut;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import persistance.dto.VehicleDto;
@@ -12,8 +16,12 @@ import persistance.repository.VehicleRepository;
 import java.util.List;
 
 @Service
-public record VehicleService(VehicleRepository vehicleRepository, CustomerRepository customerRepository) {
+@AllArgsConstructor
+public class VehicleService {
+    private final VehicleRepository vehicleRepository;
+    private final CustomerRepository customerRepository;
 
+    @Cacheable(value = "vehicles")
     public List<VehicleDto> getAllVehicles() {
         return vehicleRepository.findAll().stream()
                 .map(VehicleDto::new)
@@ -30,6 +38,22 @@ public record VehicleService(VehicleRepository vehicleRepository, CustomerReposi
                 .orElseThrow(() -> new IllegalArgumentException("Vehicles not found"));
     }
 
+    @Cacheable(value = "vehicles")
+    public List<VehicleDto> getAllUserVehiclesDto() {
+        String username = SecurityContextHolder.getContext().getAuthentication().getName();
+        long userId = customerRepository.findByUsername(username)
+                .orElseThrow(() -> new IllegalArgumentException("Customer with given username not found"))
+                .getId();
+
+        return vehicleRepository.findAllByCustomerId(userId)
+                .orElseThrow(() -> new IllegalArgumentException("Vehicles not found"))
+                .stream()
+                .map(VehicleDto::new)
+                .toList();
+    }
+
+    @CachePut(value = "vehicles")
+    @CacheEvict(value = "vehicles", allEntries = true)
     public VehicleDto addVehicle(VehicleDto source) {
         String username = SecurityContextHolder.getContext().getAuthentication().getName();
         Customer customer = customerRepository.findByUsername(username)
@@ -48,6 +72,7 @@ public record VehicleService(VehicleRepository vehicleRepository, CustomerReposi
         return source;
     }
 
+    @Cacheable(value = "vehicles")
     public Vehicle getCustomerVehicleByName(String vehicleName) {
         List<Vehicle> vehicles = getAllUserVehicles();
 
@@ -57,6 +82,7 @@ public record VehicleService(VehicleRepository vehicleRepository, CustomerReposi
                 .orElseThrow(() -> new IllegalArgumentException("Vehicle with given name not found"));
     }
 
+    @CacheEvict(value = "vehicles", allEntries = true)
     public void deleteCustomerVehicleByName(String vehicleName) {
         List<Vehicle> vehicles = getAllUserVehicles();
 

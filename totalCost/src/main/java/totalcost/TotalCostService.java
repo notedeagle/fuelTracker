@@ -1,6 +1,8 @@
 package totalcost;
 
 import expense.ExpenseService;
+import lombok.AllArgsConstructor;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 import persistance.dto.AllCustomerCostDto;
 import persistance.dto.Dates;
@@ -17,8 +19,17 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Service
-public record TotalCostService(CostCalculator costCalculator, DistanceCalculator distanceCalculator, VehicleService vehicleService,
-                               RefuelService refuelService, ExpenseService expenseService, DateCalculator dateCalculator) {
+@AllArgsConstructor
+public class TotalCostService {
+    private final CostCalculator costCalculator;
+    private final DistanceCalculator distanceCalculator;
+    private final VehicleService vehicleService;
+    private final RefuelService refuelService;
+    private final ExpenseService expenseService;
+    private final DateCalculator dateCalculator;
+
+
+    @Cacheable(value = "totalCosts")
     public AllCustomerCostDto getTotalCost(String vehicleName) {
         Vehicle vehicle = vehicleService.getCustomerVehicleByName(vehicleName);
 

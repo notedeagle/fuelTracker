@@ -22,18 +22,15 @@ public class VehicleController {
     }
 
     @GetMapping("/user")
-    public List<VehicleDto> findAllCustomerVehicle() {
-        return vehicleService.getAllUserVehicles().stream()
-                .map(VehicleDto::new)
-                .toList();
+    public ResponseEntity<List<VehicleDto>> findAllCustomerVehicle() {
+        return ResponseEntity.ok(vehicleService.getAllUserVehiclesDto());
     }
 
     @PostMapping
-    public VehicleDto addVehicle(@RequestBody VehicleDto vehicleDto) throws IllegalArgumentException {
-        return vehicleService.addVehicle(vehicleDto);
+    public ResponseEntity<VehicleDto> addVehicle(@RequestBody VehicleDto vehicleDto) throws IllegalArgumentException {
+        return ResponseEntity.ok(vehicleService.addVehicle(vehicleDto));
     }
 
-    @Transactional
     @DeleteMapping("/{vehicleName}")
     public void deleteVehicle(@PathVariable String vehicleName) throws IllegalArgumentException {
         vehicleService.deleteCustomerVehicleByName(vehicleName);

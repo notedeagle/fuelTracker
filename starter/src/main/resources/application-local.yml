@@ -4,6 +4,7 @@ logging:
     org:
       springframework:
         web: INFO
+        cache: TRACE
       hibernate:
         SQL: INFO
 

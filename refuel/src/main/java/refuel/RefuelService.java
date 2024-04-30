@@ -1,5 +1,8 @@
 package refuel;
 
+import lombok.AllArgsConstructor;
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 import persistance.entity.Refuel;
 import persistance.repository.RefuelRepository;
@@ -8,19 +11,27 @@ import vehicles.VehicleService;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.util.List;
+import java.util.Objects;
 
 @Service
-public record RefuelService(RefuelRepository refuelRepository, VehicleService vehicleService) {
+@AllArgsConstructor
+public class RefuelService {
+    private final RefuelRepository refuelRepository;
+    private final VehicleService vehicleService;
 
+    @Cacheable(value = "refuels")
     public List<Refuel> getAllCarRefuel(long vehicleId) {
         return refuelRepository.findAllByVehicleId(vehicleId).orElseThrow(IllegalStateException::new);
     }
 
+    @Cacheable(value = "refuels")
+    @CacheEvict(value = "refuels", allEntries = true)
     public Refuel addRefuel(Refuel refuel, String vehicleName) {
         refuel.setVehicle(vehicleService.getCustomerVehicleByName(vehicleName));
         return refuelRepository.save(refuel);
     }
 
+    @CacheEvict(value = "refuels", allEntries = true)
     public void deleteRefuel(long id) {
         refuelRepository.deleteById(id);
     }

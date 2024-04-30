@@ -5,15 +5,18 @@ import jakarta.persistence.Enumerated;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import lombok.ToString;
 import persistance.entity.Vehicle;
 import persistance.entity.VehicleType;
 
+import java.io.Serializable;
 import java.math.BigDecimal;
 
 @Getter
 @Setter
 @NoArgsConstructor
-public class VehicleDto {
+@ToString
+public class VehicleDto implements Serializable {
     private String name;
     private String brand;
     private String model;
