@@ -1,4 +1,4 @@
-package web;
+package expense;
 
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import lombok.AllArgsConstructor;
@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.*;
 import persistance.dto.ExpenseDto;
 import persistance.entity.Expense;
 import persistance.entity.Vehicle;
+import vehicles.VehicleService;
 
 import java.util.List;
 

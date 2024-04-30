@@ -19,12 +19,6 @@
     </properties>
     <dependencies>
         <dependency>
-            <groupId>com.fuelTracker.starter</groupId>
-            <artifactId>starter</artifactId>
-            <version>0.0.2-SNAPSHOT</version>
-            <scope>compile</scope>
-        </dependency>
-        <dependency>
             <groupId>com.fuelTracker.vehicles</groupId>
             <artifactId>vehicles</artifactId>
             <version>0.0.2-SNAPSHOT</version>

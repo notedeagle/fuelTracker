@@ -1,8 +1,5 @@
 package com.fueltracker.config.security;
 
-import com.fueltracker.utils.CostCalculator;
-import com.fueltracker.utils.DateCalculator;
-import com.fueltracker.utils.DistanceCalculator;
 import io.swagger.v3.oas.annotations.enums.SecuritySchemeType;
 import io.swagger.v3.oas.annotations.security.SecurityScheme;
 import lombok.RequiredArgsConstructor;
@@ -17,7 +14,7 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import web.CustomerService;
+import customers.CustomerService;
 
 @Configuration
 @RequiredArgsConstructor
@@ -39,21 +36,6 @@ public class Config {
     @Bean
     public ModelMapper modelMapper() {
         return new ModelMapper();
-    }
-
-    @Bean
-    public CostCalculator costCalculator() {
-        return new CostCalculator();
-    }
-
-    @Bean
-    public DistanceCalculator distanceCalculator() {
-        return new DistanceCalculator();
-    }
-
-    @Bean
-    public DateCalculator dateCalculator() {
-        return new DateCalculator();
     }
 
     @Bean

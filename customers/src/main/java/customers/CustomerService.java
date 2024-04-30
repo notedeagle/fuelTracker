@@ -1,4 +1,4 @@
-package web;
+package customers;
 
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;

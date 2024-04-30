@@ -1,4 +1,4 @@
-package web;
+package refuel;
 
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import lombok.AllArgsConstructor;
@@ -10,6 +10,7 @@ import persistance.dto.RefuelDto;
 import persistance.entity.Fuel;
 import persistance.entity.Refuel;
 import persistance.entity.Vehicle;
+import vehicles.VehicleService;
 
 import java.util.List;
 

@@ -1,4 +1,4 @@
-package web;
+package vehicles;
 
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import lombok.AllArgsConstructor;

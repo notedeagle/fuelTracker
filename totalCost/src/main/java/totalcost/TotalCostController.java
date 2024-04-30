@@ -1,4 +1,4 @@
-package web;
+package totalcost;
 
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import lombok.AllArgsConstructor;

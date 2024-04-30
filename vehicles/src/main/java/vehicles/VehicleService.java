@@ -1,4 +1,4 @@
-package web;
+package vehicles;
 
 import jakarta.persistence.EntityNotFoundException;
 import org.springframework.security.core.context.SecurityContextHolder;

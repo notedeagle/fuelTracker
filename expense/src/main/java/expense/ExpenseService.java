@@ -1,7 +1,9 @@
-package web;
+package expense;
 
 import org.springframework.stereotype.Service;
 import persistance.entity.Expense;
+import persistance.repository.ExpenseRepository;
+import vehicles.VehicleService;
 
 import java.util.List;
 

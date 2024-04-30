@@ -1,4 +1,4 @@
-package com.fueltracker.utils;
+package totalcost.utils;
 
 
 import persistance.dto.CostPerMonth;

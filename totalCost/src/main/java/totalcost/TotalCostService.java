@@ -1,14 +1,17 @@
-package web;
+package totalcost;
 
-import com.fueltracker.utils.CostCalculator;
-import com.fueltracker.utils.DateCalculator;
-import com.fueltracker.utils.DistanceCalculator;
+import expense.ExpenseService;
 import org.springframework.stereotype.Service;
 import persistance.dto.AllCustomerCostDto;
 import persistance.dto.Dates;
 import persistance.entity.Expense;
 import persistance.entity.Refuel;
 import persistance.entity.Vehicle;
+import refuel.RefuelService;
+import totalcost.utils.CostCalculator;
+import totalcost.utils.DateCalculator;
+import totalcost.utils.DistanceCalculator;
+import vehicles.VehicleService;
 
 import java.util.ArrayList;
 import java.util.List;

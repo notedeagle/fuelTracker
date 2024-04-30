@@ -1,8 +1,9 @@
-package web;
+package refuel;
 
 import org.springframework.stereotype.Service;
 import persistance.entity.Refuel;
 import persistance.repository.RefuelRepository;
+import vehicles.VehicleService;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;
