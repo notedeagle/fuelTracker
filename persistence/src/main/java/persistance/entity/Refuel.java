@@ -16,12 +16,17 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
-public class Refuel extends BaseEntity implements Serializable {
+public class Refuel implements Serializable {
 
     @Serial
     @Transient
     private static final long serialVersionUID = 1264084105211366869L;
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+    private LocalDateTime created;
+    private LocalDateTime updated;
     @NotNull(message = "Date must not be blank.")
     private LocalDateTime date;
 
@@ -56,4 +61,14 @@ public class Refuel extends BaseEntity implements Serializable {
     @ManyToOne
     @JoinColumn(name = "vehicle_id")
     private Vehicle vehicle;
+
+    @PrePersist
+    void prePersist() {
+        created = LocalDateTime.now();
+    }
+
+    @PreUpdate
+    void preUpdate() {
+        updated = LocalDateTime.now();
+    }
 }

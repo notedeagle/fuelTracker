@@ -72,7 +72,6 @@ public class VehicleService {
         return source;
     }
 
-    @Cacheable(value = "vehicles")
     public Vehicle getCustomerVehicleByName(String vehicleName) {
         List<Vehicle> vehicles = getAllUserVehicles();
 

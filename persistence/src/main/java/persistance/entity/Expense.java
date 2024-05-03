@@ -1,9 +1,6 @@
 package persistance.entity;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
-import jakarta.persistence.Transient;
+import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -18,12 +15,17 @@ import java.time.LocalDateTime;
 @Setter
 @NoArgsConstructor
 @Entity
-public class Expense extends BaseEntity implements Serializable {
+public class Expense implements Serializable {
 
     @Serial
     @Transient
     private static final long serialVersionUID = 2985438157612673779L;
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+    private LocalDateTime created;
+    private LocalDateTime updated;
     @NotBlank(message = "Date must not be blank.")
     private LocalDateTime date;
     @NotBlank(message = "Odometer must not be blank.")
@@ -35,4 +37,14 @@ public class Expense extends BaseEntity implements Serializable {
     @ManyToOne
     @JoinColumn(name = "vehicle_id")
     private Vehicle vehicle;
+
+    @PrePersist
+    void prePersist() {
+        created = LocalDateTime.now();
+    }
+
+    @PreUpdate
+    void preUpdate() {
+        updated = LocalDateTime.now();
+    }
 }

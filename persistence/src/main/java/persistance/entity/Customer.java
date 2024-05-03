@@ -8,6 +8,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 import persistance.dto.CustomerUpdateDto;
 
 import java.io.Serial;
+import java.time.LocalDateTime;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.Set;
@@ -16,12 +17,17 @@ import java.util.Set;
 @Getter
 @NoArgsConstructor
 @Entity
-public class Customer extends BaseEntity implements UserDetails {
+public class Customer implements UserDetails {
 
     @Serial
     @Transient
     private static final long serialVersionUID = 8132281207583508963L;
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+    private LocalDateTime created;
+    private LocalDateTime updated;
     private String username;
     private String email;
     private String firstname;
@@ -44,11 +50,16 @@ public class Customer extends BaseEntity implements UserDetails {
         this.password = password;
     }
 
-    @Override
+    @PrePersist
     void prePersist() {
-        super.prePersist();
+        created = LocalDateTime.now();
         locked = false;
         enabled = true;
+    }
+
+    @PreUpdate
+    void preUpdate() {
+        updated = LocalDateTime.now();
     }
 
     public void updateFrom(final CustomerUpdateDto source) {
