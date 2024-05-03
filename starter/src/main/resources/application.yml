@@ -9,3 +9,9 @@ jwt:
   refresh-token:
     expiration: 604800000 # 7 days
   secret:
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: [ "prometheus" ]
