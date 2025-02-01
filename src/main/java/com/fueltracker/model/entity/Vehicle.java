@@ -50,7 +50,7 @@ public class Vehicle {
 
     @ManyToOne
     @JoinColumn(name = "customer_id")
-    private Customer customer;
+    private Customers customer;
 
     @OneToMany(mappedBy = "vehicle", cascade = CascadeType.REMOVE)
     private Set<Refuel> refuel;

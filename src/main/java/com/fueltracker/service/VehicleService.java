@@ -1,7 +1,7 @@
 package com.fueltracker.service;
 
 import com.fueltracker.model.dto.VehicleDto;
-import com.fueltracker.model.entity.Customer;
+import com.fueltracker.model.entity.Customers;
 import com.fueltracker.model.entity.Vehicle;
 import com.fueltracker.repository.CustomerRepository;
 import com.fueltracker.repository.VehicleRepository;
@@ -32,7 +32,7 @@ public record VehicleService(VehicleRepository vehicleRepository, CustomerReposi
 
     public VehicleDto addVehicle(VehicleDto source) {
         String username = SecurityContextHolder.getContext().getAuthentication().getName();
-        Customer customer = customerRepository.findByUsername(username)
+        Customers customer = customerRepository.findByUsername(username)
                 .orElseThrow(() -> new EntityNotFoundException("Customer with given id not found."));
 
         vehicleRepository.findVehicleByNameAndCustomerId(source.getName(), customer.getId())

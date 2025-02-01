@@ -22,7 +22,7 @@ import java.util.Set;
 @NoArgsConstructor
 @Entity
 @Table(name = "CUSTOMERS")
-public class Customer implements UserDetails {
+public class Customers implements UserDetails {
 
     @Id
     @NotNull
@@ -77,7 +77,7 @@ public class Customer implements UserDetails {
     @OneToMany(mappedBy = "CUSTOMERS", cascade = CascadeType.ALL, orphanRemoval = true)
     private Set<Vehicle> vehicles;
 
-    public Customer(String username, String email, String firstName, String lastname, String password) {
+    public Customers(String username, String email, String firstName, String lastname, String password) {
         this.username = username;
         this.email = email;
         this.firstname = firstName;
