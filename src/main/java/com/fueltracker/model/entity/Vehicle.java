@@ -9,9 +9,8 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import java.io.Serial;
-import java.io.Serializable;
 import java.math.BigDecimal;
+import java.time.LocalDateTime;
 import java.util.Set;
 
 @Getter
@@ -19,11 +18,15 @@ import java.util.Set;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-public class Vehicle extends BaseEntity implements Serializable {
+public class Vehicle {
 
-    @Serial
-    @Transient
-    private static final long serialVersionUID = -1282242912816936305L;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+
+    private LocalDateTime created;
+
+    private LocalDateTime updated;
 
     @NotBlank(message = "Name must not be blank.")
     private String name;
@@ -62,5 +65,15 @@ public class Vehicle extends BaseEntity implements Serializable {
         this.plateNumber = vehicleDto.getPlateNumber();
         this.capacity = vehicleDto.getCapacity();
         this.type = vehicleDto.getVehicleType();
+    }
+
+    @PrePersist
+    void prePersist() {
+        created = LocalDateTime.now();
+    }
+
+    @PreUpdate
+    void preUpdate() {
+        updated = LocalDateTime.now();
     }
 }

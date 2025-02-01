@@ -2,12 +2,17 @@ package com.fueltracker.model.entity;
 
 import com.fueltracker.model.dto.CustomerUpdateDto;
 import jakarta.persistence.*;
+import jakarta.validation.constraints.Email;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 import lombok.*;
+import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
-import java.io.Serial;
+import java.time.LocalDateTime;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.Set;
@@ -16,24 +21,60 @@ import java.util.Set;
 @Getter
 @NoArgsConstructor
 @Entity
-public class Customer extends BaseEntity implements UserDetails {
+@Table(name = "CUSTOMERS")
+public class Customer implements UserDetails {
 
-    @Serial
-    @Transient
-    private static final long serialVersionUID = 8132281207583508963L;
+    @Id
+    @NotNull
+    @Column(name = "CUS_ID")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
 
+    @NotNull
+    @CreatedDate
+    @Column(name = "CUS_CREATED")
+    private LocalDateTime created;
+
+    @NotNull
+    @LastModifiedDate
+    @Column(name = "CUS_UPDATED")
+    private LocalDateTime updated;
+
+    @NotBlank
+    @Column(name = "CUS_USERNAME")
     private String username;
-    private String email;
-    private String firstname;
-    private String lastname;
-    private String password;
-    private boolean locked;
-    private boolean enabled;
 
+    @Email
+    @NotBlank
+    @Column(name = "CUS_EMAIL")
+    private String email;
+
+    @NotBlank
+    @Column(name = "CUS_FIRST_NAME")
+    private String firstname;
+
+    @NotBlank
+    @Column(name = "CUS_LAST_NAME")
+    private String lastname;
+
+    @NotBlank
+    @Column(name = "CUS_PASSWORD")
+    private String password;
+
+    @NotNull
+    @Column(name = "CUS_LOCKED")
+    private Boolean locked;
+
+    @NotNull
+    @Column(name = "CUS_ENABLED")
+    private Boolean enabled;
+
+    @NotNull
+    @Column(name = "CUS_USER_ROLE")
     @Enumerated(EnumType.STRING)
     private CustomerRole userRole = CustomerRole.USER;
 
-    @OneToMany(mappedBy = "customer", cascade = CascadeType.REMOVE)
+    @OneToMany(mappedBy = "CUSTOMERS", cascade = CascadeType.ALL, orphanRemoval = true)
     private Set<Vehicle> vehicles;
 
     public Customer(String username, String email, String firstName, String lastname, String password) {
@@ -44,11 +85,17 @@ public class Customer extends BaseEntity implements UserDetails {
         this.password = password;
     }
 
-    @Override
+
+    @PrePersist
     void prePersist() {
-        super.prePersist();
+        created = LocalDateTime.now();
         locked = false;
         enabled = true;
+    }
+
+    @PreUpdate
+    void preUpdate() {
+        updated = LocalDateTime.now();
     }
 
     public void updateFrom(final CustomerUpdateDto source) {
