@@ -75,7 +75,7 @@ public class Customers implements UserDetails {
     private CustomerRole userRole = CustomerRole.USER;
 
     @OneToMany(mappedBy = "CUSTOMERS", cascade = CascadeType.ALL, orphanRemoval = true)
-    private Set<Vehicle> vehicles;
+    private Set<Vehicles> vehicles;
 
     public Customers(String username, String email, String firstName, String lastname, String password) {
         this.username = username;
@@ -98,7 +98,7 @@ public class Customers implements UserDetails {
         updated = LocalDateTime.now();
     }
 
-    public void updateFrom(final CustomerUpdateDto source) {
+    public void updateFrom(CustomerUpdateDto source) {
         username = source.getUsername();
         email = source.getEmail();
         firstname = source.getFirstName();

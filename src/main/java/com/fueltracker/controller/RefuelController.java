@@ -4,7 +4,7 @@ import com.fueltracker.model.dto.ElectricRefuelDto;
 import com.fueltracker.model.dto.RefuelDto;
 import com.fueltracker.model.entity.Fuel;
 import com.fueltracker.model.entity.Refuel;
-import com.fueltracker.model.entity.Vehicle;
+import com.fueltracker.model.entity.Vehicles;
 import com.fueltracker.service.RefuelService;
 import com.fueltracker.service.VehicleService;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
@@ -28,7 +28,7 @@ public class RefuelController {
 
     @GetMapping("/{vehicleName}")
     public List<RefuelDto> findAllRefuelByVehicleName(@PathVariable String vehicleName) {
-        Vehicle vehicle = vehicleService.getCustomerVehicleByName(vehicleName);
+        Vehicles vehicle = vehicleService.getCustomerVehicleByName(vehicleName);
         return refuelService.getAllCarRefuel(vehicle.getId()).stream()
                 .map(v -> mapper.map(v, RefuelDto.class))
                 .collect(Collectors.toList());

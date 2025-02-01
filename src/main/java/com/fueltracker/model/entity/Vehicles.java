@@ -8,6 +8,8 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.annotation.LastModifiedDate;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
@@ -18,46 +20,65 @@ import java.util.Set;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-public class Vehicle {
+@Table(name = "VEHICLES")
+public class Vehicles {
 
     @Id
+    @NotNull
+    @Column(name = "VEH_ID")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @NotNull
+    @CreatedDate
+    @Column(name = "VEH_CREATED")
     private LocalDateTime created;
 
+    @NotNull
+    @LastModifiedDate
+    @Column(name = "VEH_UPDATED")
     private LocalDateTime updated;
 
     @NotBlank(message = "Name must not be blank.")
+    @Column(name = "VEH_NAME")
     private String name;
 
     @NotBlank(message = "Vehicle brand must not be blank.")
+    @Column(name = "VEH_BRAND")
     private String brand;
 
     @NotBlank(message = "Model must not be blank.")
+    @Column(name = "VEH_MODEL")
     private String model;
 
-    private int yearOfProduction;
+    @NotNull
+    @Column(name = "VEH_YR_OF_PROD")
+    private Integer yearOfProduction;
 
+    @NotBlank(message = "Plate number must not be blank.")
+    @Column(name = "VEH_PLATE_NUMBER")
     private String plateNumber;
 
     @NotNull(message = "Tank capacity must not be blank.")
+    @Column(name = "VEH_CAPACITY")
     private BigDecimal capacity;
 
     @NotNull(message = "Vehicle type must not be blank.")
     @Enumerated(EnumType.STRING)
+    @Column(name = "VEH_TYPE")
     private VehicleType type;
 
     @ManyToOne
-    @JoinColumn(name = "customer_id")
+    @JoinColumn(name = "VEH_CUS_ID")
     private Customers customer;
 
     @OneToMany(mappedBy = "vehicle", cascade = CascadeType.REMOVE)
     private Set<Refuel> refuel;
+
     @OneToMany(mappedBy = "vehicle", cascade = CascadeType.REMOVE)
     private Set<Expense> expense;
 
-    public Vehicle(VehicleDto vehicleDto) {
+    public Vehicles(VehicleDto vehicleDto) {
         this.name = vehicleDto.getName();
         this.brand = vehicleDto.getBrand();
         this.model = vehicleDto.getModel();

@@ -6,8 +6,6 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import java.io.Serial;
-import java.io.Serializable;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
@@ -35,7 +33,7 @@ public class Expense {
 
     @ManyToOne
     @JoinColumn(name = "vehicle_id")
-    private Vehicle vehicle;
+    private Vehicles vehicle;
 
     @PrePersist
     void prePersist() {
