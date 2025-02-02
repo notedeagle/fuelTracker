@@ -26,7 +26,7 @@ public class Expense {
     @NotBlank(message = "Date must not be blank.")
     private LocalDateTime date;
     @NotBlank(message = "Odometer must not be blank.")
-    private long odometer;
+    private Integer odometer;
     @NotBlank(message = "Total cost must not be blank.")
     private BigDecimal totalCost;
     private String note;

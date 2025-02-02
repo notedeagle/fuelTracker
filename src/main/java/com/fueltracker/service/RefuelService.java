@@ -1,6 +1,6 @@
 package com.fueltracker.service;
 
-import com.fueltracker.model.entity.Refuel;
+import com.fueltracker.model.entity.Refuels;
 import com.fueltracker.repository.RefuelRepository;
 import org.springframework.stereotype.Service;
 
@@ -12,11 +12,11 @@ import java.util.List;
 public record RefuelService(RefuelRepository refuelRepository,
                             VehicleService vehicleService) {
 
-    public List<Refuel> getAllCarRefuel(long vehicleId) {
+    public List<Refuels> getAllCarRefuel(long vehicleId) {
         return refuelRepository.findAllByVehicleId(vehicleId).orElseThrow(IllegalStateException::new);
     }
 
-    public Refuel addRefuel(Refuel refuel, String vehicleName) {
+    public Refuels addRefuel(Refuels refuel, String vehicleName) {
         refuel.setVehicle(vehicleService.getCustomerVehicleByName(vehicleName));
         return refuelRepository.save(refuel);
     }

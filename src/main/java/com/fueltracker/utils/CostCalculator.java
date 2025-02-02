@@ -2,7 +2,7 @@ package com.fueltracker.utils;
 
 import com.fueltracker.model.dto.CostPerMonth;
 import com.fueltracker.model.entity.Expense;
-import com.fueltracker.model.entity.Refuel;
+import com.fueltracker.model.entity.Refuels;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;
@@ -11,9 +11,9 @@ import java.util.*;
 public class CostCalculator {
     private final DistanceCalculator distanceCalculator = new DistanceCalculator();
 
-    public BigDecimal calculateTotalCost(List<Refuel> refuels, List<Expense> expenses) {
+    public BigDecimal calculateTotalCost(List<Refuels> refuels, List<Expense> expenses) {
         BigDecimal refuelCost = refuels.stream()
-                .map(Refuel::getTotalCost)
+                .map(Refuels::getTotalCost)
                 .reduce(BigDecimal.ZERO, BigDecimal::add);
 
         BigDecimal expenseCost = expenses.stream()
@@ -23,17 +23,17 @@ public class CostCalculator {
         return refuelCost.add(expenseCost);
     }
 
-    public BigDecimal calculateTotalCostPerDay(List<Refuel> refuels, List<Expense> expenses) {
+    public BigDecimal calculateTotalCostPerDay(List<Refuels> refuels, List<Expense> expenses) {
         BigDecimal totalCost = calculateTotalCost(refuels, expenses);
         return totalCost.divide(distanceCalculator.calculateAmountOfDays(refuels, expenses), RoundingMode.HALF_UP);
     }
 
-    public BigDecimal calculateTotalCostPerKm(List<Refuel> refuels, List<Expense> expenses) {
+    public BigDecimal calculateTotalCostPerKm(List<Refuels> refuels, List<Expense> expenses) {
         return calculateTotalCost(refuels, expenses).divide(BigDecimal.valueOf(distanceCalculator.calculateTotalDistance(refuels, expenses)),
                 RoundingMode.HALF_UP);
     }
 
-    public Set<CostPerMonth> getCostPerMonth(List<Refuel> refuels, List<Expense> expenses) {
+    public Set<CostPerMonth> getCostPerMonth(List<Refuels> refuels, List<Expense> expenses) {
         Set<CostPerMonth> costPerMonthSet = new HashSet<>();
         Set<Integer> month = new HashSet<>();
 
@@ -48,10 +48,10 @@ public class CostCalculator {
         return costPerMonthSet;
     }
 
-    private BigDecimal getTotalCostPerMonth(List<Refuel> refuels, List<Expense> expenses, int monthNumber) {
+    private BigDecimal getTotalCostPerMonth(List<Refuels> refuels, List<Expense> expenses, int monthNumber) {
         BigDecimal totalCostRefuels = refuels.stream()
                 .filter(c -> c.getDate().getMonthValue() == monthNumber)
-                .map(Refuel::getTotalCost)
+                .map(Refuels::getTotalCost)
                 .reduce(BigDecimal.ZERO, BigDecimal::add);
 
         BigDecimal totalCostExpense = expenses.stream()
