@@ -12,6 +12,7 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
+import java.io.Serial;
 import java.time.LocalDateTime;
 import java.util.Collection;
 import java.util.Collections;
@@ -74,7 +75,7 @@ public class Customers implements UserDetails {
     @Enumerated(EnumType.STRING)
     private CustomerRole userRole = CustomerRole.USER;
 
-    @OneToMany(mappedBy = "CUSTOMERS", cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(mappedBy = "customer", cascade = CascadeType.ALL, orphanRemoval = true)
     private Set<Vehicles> vehicles;
 
     public Customers(String username, String email, String firstName, String lastname, String password) {

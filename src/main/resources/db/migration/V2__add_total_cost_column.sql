@@ -1,1 +1,0 @@
-alter table expense add column total_cost numeric(19, 2)

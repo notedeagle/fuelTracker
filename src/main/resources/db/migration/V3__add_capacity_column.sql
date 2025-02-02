@@ -1,1 +1,0 @@
-alter table vehicle add column capacity numeric(19, 2)

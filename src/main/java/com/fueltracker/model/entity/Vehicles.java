@@ -72,11 +72,11 @@ public class Vehicles {
     @JoinColumn(name = "VEH_CUS_ID")
     private Customers customer;
 
-    @OneToMany(mappedBy = "VEHICLES", cascade = CascadeType.REMOVE)
+    @OneToMany(mappedBy = "vehicle", cascade = CascadeType.REMOVE)
     private Set<Refuels> refuel;
 
-    @OneToMany(mappedBy = "VEHICLES", cascade = CascadeType.REMOVE)
-    private Set<Expense> expense;
+    @OneToMany(mappedBy = "vehicle", cascade = CascadeType.REMOVE)
+    private Set<Expenses> expense;
 
     public Vehicles(VehicleDto vehicleDto) {
         this.name = vehicleDto.getName();

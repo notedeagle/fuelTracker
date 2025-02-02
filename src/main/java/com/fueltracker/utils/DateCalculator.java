@@ -1,7 +1,7 @@
 package com.fueltracker.utils;
 
 import com.fueltracker.model.dto.Dates;
-import com.fueltracker.model.entity.Expense;
+import com.fueltracker.model.entity.Expenses;
 import com.fueltracker.model.entity.Refuels;
 
 import java.time.LocalDate;
@@ -10,7 +10,7 @@ import java.util.Collections;
 import java.util.List;
 
 public class DateCalculator {
-    public Dates startAndEndDateCalculator(List<Refuels> refuels, List<Expense> expenses) {
+    public Dates startAndEndDateCalculator(List<Refuels> refuels, List<Expenses> expenses) {
         List<LocalDate> dates = new ArrayList<>();
 
         refuels.forEach(refuel -> dates.add(refuel.getDate().toLocalDate()));

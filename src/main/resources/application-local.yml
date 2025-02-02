@@ -10,6 +10,6 @@ logging:
 #DATABASELOCAL
 spring:
   datasource:
-    url: jdbc:postgresql://localhost:5432/fuelTracker
+    url: jdbc:postgresql://localhost:6432/fuelTracker
     username: fuelTracker
     password: postgresDev

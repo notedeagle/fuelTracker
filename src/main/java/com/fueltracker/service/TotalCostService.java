@@ -2,7 +2,7 @@ package com.fueltracker.service;
 
 import com.fueltracker.model.dto.AllCustomerCostDto;
 import com.fueltracker.model.dto.Dates;
-import com.fueltracker.model.entity.Expense;
+import com.fueltracker.model.entity.Expenses;
 import com.fueltracker.model.entity.Refuels;
 import com.fueltracker.model.entity.Vehicles;
 import com.fueltracker.utils.CostCalculator;
@@ -20,7 +20,7 @@ public record TotalCostService(CostCalculator costCalculator, DistanceCalculator
         Vehicles vehicle = vehicleService.getCustomerVehicleByName(vehicleName);
 
         List<Refuels> refuels = new ArrayList<>(refuelService.getAllCarRefuel(vehicle.getId()));
-        List<Expense> expenses = new ArrayList<>(expenseService.getAllExpenses(vehicle.getId()));
+        List<Expenses> expenses = new ArrayList<>(expenseService.getAllExpenses(vehicle.getId()));
         Dates dates = dateCalculator.startAndEndDateCalculator(refuels, expenses);
 
         return AllCustomerCostDto.builder()
