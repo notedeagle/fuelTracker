@@ -1,6 +1,6 @@
 package com.fueltracker.model.dto;
 
-import com.fueltracker.model.entity.Vehicle;
+import com.fueltracker.model.entity.Vehicles;
 import com.fueltracker.model.entity.VehicleType;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
@@ -23,7 +23,7 @@ public class VehicleDto {
     @Enumerated(EnumType.STRING)
     private VehicleType vehicleType;
 
-    public VehicleDto(Vehicle vehicle) {
+    public VehicleDto(Vehicles vehicle) {
         this.name = vehicle.getName();
         this.brand = vehicle.getBrand();
         this.model = vehicle.getModel();

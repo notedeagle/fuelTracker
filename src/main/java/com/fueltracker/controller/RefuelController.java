@@ -3,8 +3,8 @@ package com.fueltracker.controller;
 import com.fueltracker.model.dto.ElectricRefuelDto;
 import com.fueltracker.model.dto.RefuelDto;
 import com.fueltracker.model.entity.Fuel;
-import com.fueltracker.model.entity.Refuel;
-import com.fueltracker.model.entity.Vehicle;
+import com.fueltracker.model.entity.Refuels;
+import com.fueltracker.model.entity.Vehicles;
 import com.fueltracker.service.RefuelService;
 import com.fueltracker.service.VehicleService;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
@@ -28,7 +28,7 @@ public class RefuelController {
 
     @GetMapping("/{vehicleName}")
     public List<RefuelDto> findAllRefuelByVehicleName(@PathVariable String vehicleName) {
-        Vehicle vehicle = vehicleService.getCustomerVehicleByName(vehicleName);
+        Vehicles vehicle = vehicleService.getCustomerVehicleByName(vehicleName);
         return refuelService.getAllCarRefuel(vehicle.getId()).stream()
                 .map(v -> mapper.map(v, RefuelDto.class))
                 .collect(Collectors.toList());
@@ -36,13 +36,13 @@ public class RefuelController {
 
     @PostMapping("/{vehicleName}")
     public RefuelDto addRefuel(@RequestBody RefuelDto refuelDto, @PathVariable String vehicleName) {
-        Refuel refuel = mapper.map(refuelDto, Refuel.class);
+        Refuels refuel = mapper.map(refuelDto, Refuels.class);
         return mapper.map(refuelService.addRefuel(refuel, vehicleName), RefuelDto.class);
     }
 
     @PostMapping("/electric/{vehicleName}")
     public RefuelDto addElectricRefuel(@RequestBody ElectricRefuelDto electricRefuelDto, @PathVariable String vehicleName) {
-        Refuel refuel = Refuel.builder()
+        Refuels refuel = Refuels.builder()
                 .date(electricRefuelDto.getDate())
                 .odometer(electricRefuelDto.getOdometer())
                 .fuel(Fuel.ELECTRIC)

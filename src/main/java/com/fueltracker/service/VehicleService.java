@@ -1,8 +1,8 @@
 package com.fueltracker.service;
 
 import com.fueltracker.model.dto.VehicleDto;
-import com.fueltracker.model.entity.Customer;
-import com.fueltracker.model.entity.Vehicle;
+import com.fueltracker.model.entity.Customers;
+import com.fueltracker.model.entity.Vehicles;
 import com.fueltracker.repository.CustomerRepository;
 import com.fueltracker.repository.VehicleRepository;
 import jakarta.persistence.EntityNotFoundException;
@@ -20,7 +20,7 @@ public record VehicleService(VehicleRepository vehicleRepository, CustomerReposi
                 .toList();
     }
 
-    public List<Vehicle> getAllUserVehicles() {
+    public List<Vehicles> getAllUserVehicles() {
         String username = SecurityContextHolder.getContext().getAuthentication().getName();
         long userId = customerRepository.findByUsername(username)
                 .orElseThrow(() -> new IllegalArgumentException("Customer with given username not found"))
@@ -32,7 +32,7 @@ public record VehicleService(VehicleRepository vehicleRepository, CustomerReposi
 
     public VehicleDto addVehicle(VehicleDto source) {
         String username = SecurityContextHolder.getContext().getAuthentication().getName();
-        Customer customer = customerRepository.findByUsername(username)
+        Customers customer = customerRepository.findByUsername(username)
                 .orElseThrow(() -> new EntityNotFoundException("Customer with given id not found."));
 
         vehicleRepository.findVehicleByNameAndCustomerId(source.getName(), customer.getId())
@@ -41,15 +41,15 @@ public record VehicleService(VehicleRepository vehicleRepository, CustomerReposi
                 });
 
 
-        Vehicle vehicle = new Vehicle(source);
+        Vehicles vehicle = new Vehicles(source);
         vehicle.setCustomer(customer);
         vehicleRepository.save(vehicle);
 
         return source;
     }
 
-    public Vehicle getCustomerVehicleByName(String vehicleName) {
-        List<Vehicle> vehicles = getAllUserVehicles();
+    public Vehicles getCustomerVehicleByName(String vehicleName) {
+        List<Vehicles> vehicles = getAllUserVehicles();
 
         return vehicles.stream()
                 .filter(v -> v.getName().equals(vehicleName))
@@ -58,9 +58,9 @@ public record VehicleService(VehicleRepository vehicleRepository, CustomerReposi
     }
 
     public void deleteCustomerVehicleByName(String vehicleName) {
-        List<Vehicle> vehicles = getAllUserVehicles();
+        List<Vehicles> vehicles = getAllUserVehicles();
 
-        Vehicle vehicle = vehicles.stream()
+        Vehicles vehicle = vehicles.stream()
                 .filter(v -> v.getName().equals(vehicleName))
                 .findAny()
                 .orElseThrow(() -> new IllegalArgumentException("Vehicle with given name not found"));

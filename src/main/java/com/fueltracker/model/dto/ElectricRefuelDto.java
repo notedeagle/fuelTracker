@@ -10,7 +10,7 @@ import java.time.LocalDateTime;
 @Setter
 public class ElectricRefuelDto {
     private LocalDateTime date;
-    private long odometer;
+    private int odometer;
     private boolean fullTank;
     private double startLvl;
     private double endLvl;

@@ -1,8 +1,8 @@
 package com.fueltracker.controller;
 
 import com.fueltracker.model.dto.ExpenseDto;
-import com.fueltracker.model.entity.Expense;
-import com.fueltracker.model.entity.Vehicle;
+import com.fueltracker.model.entity.Expenses;
+import com.fueltracker.model.entity.Vehicles;
 import com.fueltracker.service.ExpenseService;
 import com.fueltracker.service.VehicleService;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
@@ -26,7 +26,7 @@ public class ExpenseController {
 
     @GetMapping("/{vehicleName}")
     public List<ExpenseDto> findAllExpensesByVehicleName(@PathVariable String vehicleName) {
-        Vehicle vehicle = vehicleService.getCustomerVehicleByName(vehicleName);
+        Vehicles vehicle = vehicleService.getCustomerVehicleByName(vehicleName);
 
         return expenseService.getAllExpenses(vehicle.getId()).stream()
                 .map(v -> mapper.map(v, ExpenseDto.class))
@@ -35,7 +35,7 @@ public class ExpenseController {
 
     @PostMapping("/{vehicleName}")
     public ExpenseDto addExpense(@RequestBody ExpenseDto expenseDto, @PathVariable String vehicleName) {
-        Expense expense = mapper.map(expenseDto, Expense.class);
+        Expenses expense = mapper.map(expenseDto, Expenses.class);
         return mapper.map(expenseService.addExpense(expense, vehicleName), ExpenseDto.class);
     }
 
