@@ -25,18 +25,20 @@ import java.util.Set;
 @Table(name = "CUSTOMERS")
 public class Customers implements UserDetails {
 
+    @Serial
+    private static final long serialVersionUID = 3689096728613182761L;
+
     @Id
     @NotNull
     @Column(name = "CUS_ID")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private long id;
 
     @NotNull
     @CreatedDate
     @Column(name = "CUS_CREATED")
     private LocalDateTime created;
 
-    @NotNull
     @LastModifiedDate
     @Column(name = "CUS_UPDATED")
     private LocalDateTime updated;
@@ -64,11 +66,11 @@ public class Customers implements UserDetails {
 
     @NotNull
     @Column(name = "CUS_LOCKED")
-    private Boolean locked;
+    private boolean locked;
 
     @NotNull
     @Column(name = "CUS_ENABLED")
-    private Boolean enabled;
+    private boolean enabled;
 
     @NotNull
     @Column(name = "CUS_USER_ROLE")
@@ -108,8 +110,7 @@ public class Customers implements UserDetails {
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        SimpleGrantedAuthority authority = new SimpleGrantedAuthority(userRole.name());
-        return Collections.singletonList(authority);
+        return Collections.singletonList(new SimpleGrantedAuthority(userRole.name()));
     }
 
     @Override
