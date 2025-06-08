@@ -1,6 +1,7 @@
 package com.fueltracker.repository;
 
 import com.fueltracker.model.entity.Customer;
+import io.micrometer.common.lang.NonNull;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
@@ -15,6 +16,7 @@ public interface CustomerRepository extends JpaRepository<Customer, Long> {
     Optional<Customer> findByEmail(@Param("email") String email);
 
     @Override
+    @NonNull
     @Query("from Customer c left join fetch c.vehicles")
     List<Customer> findAll();
 }

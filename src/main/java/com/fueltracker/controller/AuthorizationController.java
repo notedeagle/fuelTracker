@@ -41,9 +41,4 @@ public class AuthorizationController {
     public ResponseEntity<AuthenticationResponse> login(@RequestBody LoginCredentials credentials) {
         return ResponseEntity.ok(customerService.authenticate(credentials));
     }
-
-    @GetMapping("/secured")
-    public String secured() {
-        return "secured";
-    }
 }
