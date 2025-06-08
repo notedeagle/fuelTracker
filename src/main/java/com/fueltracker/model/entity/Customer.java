@@ -23,7 +23,7 @@ import java.util.Set;
 @NoArgsConstructor
 @Entity
 @Table(name = "CUSTOMERS")
-public class Customers implements UserDetails {
+public class Customer implements UserDetails {
 
     @Serial
     private static final long serialVersionUID = 3689096728613182761L;
@@ -78,9 +78,9 @@ public class Customers implements UserDetails {
     private CustomerRole userRole = CustomerRole.USER;
 
     @OneToMany(mappedBy = "customer", cascade = CascadeType.ALL, orphanRemoval = true)
-    private Set<Vehicles> vehicles;
+    private Set<Vehicle> vehicles;
 
-    public Customers(String username, String email, String firstName, String lastname, String password) {
+    public Customer(String username, String email, String firstName, String lastname, String password) {
         this.username = username;
         this.email = email;
         this.firstname = firstName;

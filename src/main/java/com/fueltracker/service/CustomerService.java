@@ -4,7 +4,7 @@ import com.fueltracker.config.security.AuthenticationResponse;
 import com.fueltracker.config.security.JwtUtils;
 import com.fueltracker.config.security.LoginCredentials;
 import com.fueltracker.model.dto.CustomerUpdateDto;
-import com.fueltracker.model.entity.Customers;
+import com.fueltracker.model.entity.Customer;
 import com.fueltracker.repository.CustomerRepository;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
@@ -30,7 +30,7 @@ public class CustomerService implements UserDetailsService {
     private final AuthenticationManager authenticationManager;
     private final JwtUtils jwtUtils;
 
-    public void singUpUser(Customers customer) {
+    public void singUpUser(Customer customer) {
         String encodedPassword = bCryptPasswordEncoder.encode(customer.getPassword());
         customer.setPassword(encodedPassword);
         customerRepository.save(customer);
@@ -41,7 +41,7 @@ public class CustomerService implements UserDetailsService {
                 new UsernamePasswordAuthenticationToken(loginCredentials.getUsername(), loginCredentials.getPassword())
         );
 
-        Customers customer = customerRepository.findByUsername(loginCredentials.getUsername()).orElseThrow();
+        Customer customer = customerRepository.findByUsername(loginCredentials.getUsername()).orElseThrow();
         String token = jwtUtils.generateToken(customer);
         String refreshToken = jwtUtils.generateRefreshToken(customer);
 
@@ -68,7 +68,7 @@ public class CustomerService implements UserDetailsService {
             return ResponseEntity.status(HttpStatus.CONFLICT).body("Email address already taken.");
         }
 
-        Customers customerEdited = customerRepository.findById(id).orElseThrow();
+        Customer customerEdited = customerRepository.findById(id).orElseThrow();
         customerEdited.updateFrom(customer);
 
         return ResponseEntity.noContent().build();

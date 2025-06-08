@@ -1,70 +1,92 @@
 package com.fueltracker.service;
 
+import com.fueltracker.exception.ResourceNotFoundException;
 import com.fueltracker.model.dto.VehicleDto;
-import com.fueltracker.model.entity.Customers;
-import com.fueltracker.model.entity.Vehicles;
+import com.fueltracker.model.entity.Customer;
+import com.fueltracker.model.entity.Vehicle;
 import com.fueltracker.repository.CustomerRepository;
 import com.fueltracker.repository.VehicleRepository;
-import jakarta.persistence.EntityNotFoundException;
+import jakarta.validation.Valid;
+import lombok.RequiredArgsConstructor;
+import org.modelmapper.ModelMapper;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+import org.springframework.validation.annotation.Validated;
 
 import java.util.List;
+import java.util.Objects;
+import java.util.stream.Collectors;
 
 @Service
-public record VehicleService(VehicleRepository vehicleRepository, CustomerRepository customerRepository) {
+@RequiredArgsConstructor
+@Transactional(readOnly = true)
+@Validated
+public class VehicleService {
+
+    private final VehicleRepository vehicleRepository;
+    private final CustomerRepository customerRepository;
+    private final ModelMapper modelMapper;
 
     public List<VehicleDto> getAllVehicles() {
         return vehicleRepository.findAll().stream()
-                .map(VehicleDto::new)
-                .toList();
+                .map(vehicle -> modelMapper.map(vehicle, VehicleDto.class))
+                .collect(Collectors.toList());
     }
 
-    public List<Vehicles> getAllUserVehicles() {
-        String username = SecurityContextHolder.getContext().getAuthentication().getName();
+    public List<Vehicle> getAllUserVehicles() {
+        String username = getCurrentUsername();
         long userId = customerRepository.findByUsername(username)
-                .orElseThrow(() -> new IllegalArgumentException("Customer with given username not found"))
+                .orElseThrow(() -> new ResourceNotFoundException("Customer with username " + username + " not found"))
                 .getId();
 
         return vehicleRepository.findAllByCustomerId(userId)
-                .orElseThrow(() -> new IllegalArgumentException("Vehicles not found"));
+                .orElseThrow(() -> new ResourceNotFoundException("No vehicles found for user " + username));
     }
 
-    public VehicleDto addVehicle(VehicleDto source) {
-        String username = SecurityContextHolder.getContext().getAuthentication().getName();
-        Customers customer = customerRepository.findByUsername(username)
-                .orElseThrow(() -> new EntityNotFoundException("Customer with given id not found."));
+    @Transactional
+    public VehicleDto addVehicle(@Valid VehicleDto vehicleDto) {
+        // Validate input
+        Objects.requireNonNull(vehicleDto, "Vehicle data cannot be null");
 
-        vehicleRepository.findVehicleByNameAndCustomerId(source.getName(), customer.getId())
+        String username = getCurrentUsername();
+        Customer customer = customerRepository.findByUsername(username)
+                .orElseThrow(() -> new ResourceNotFoundException("Customer with username " + username + " not found"));
+
+        vehicleRepository.findVehicleByNameAndCustomerId(vehicleDto.getName(), customer.getId())
                 .ifPresent(vehicle -> {
-                    throw new IllegalArgumentException(source.getName());
+                    throw new IllegalArgumentException("Vehicle with name " + vehicleDto.getName() + " already exists");
                 });
 
-
-        Vehicles vehicle = new Vehicles(source);
+        Vehicle vehicle = modelMapper.map(vehicleDto, Vehicle.class);
         vehicle.setCustomer(customer);
-        vehicleRepository.save(vehicle);
+        Vehicle savedVehicle = vehicleRepository.save(vehicle);
 
-        return source;
+        return modelMapper.map(savedVehicle, VehicleDto.class);
     }
 
-    public Vehicles getCustomerVehicleByName(String vehicleName) {
-        List<Vehicles> vehicles = getAllUserVehicles();
+    public Vehicle getCustomerVehicleByName(String vehicleName) {
+        List<Vehicle> vehicles = getAllUserVehicles();
 
         return vehicles.stream()
                 .filter(v -> v.getName().equals(vehicleName))
                 .findAny()
-                .orElseThrow(() -> new IllegalArgumentException("Vehicle with given name not found"));
+                .orElseThrow(() -> new ResourceNotFoundException("Vehicle with name " + vehicleName + " not found"));
     }
 
+    @Transactional
     public void deleteCustomerVehicleByName(String vehicleName) {
-        List<Vehicles> vehicles = getAllUserVehicles();
+        List<Vehicle> vehicles = getAllUserVehicles();
 
-        Vehicles vehicle = vehicles.stream()
+        Vehicle vehicle = vehicles.stream()
                 .filter(v -> v.getName().equals(vehicleName))
                 .findAny()
-                .orElseThrow(() -> new IllegalArgumentException("Vehicle with given name not found"));
+                .orElseThrow(() -> new ResourceNotFoundException("Vehicle with name " + vehicleName + " not found"));
 
         vehicleRepository.deleteById(vehicle.getId());
+    }
+
+    private String getCurrentUsername() {
+        return SecurityContextHolder.getContext().getAuthentication().getName();
     }
 }

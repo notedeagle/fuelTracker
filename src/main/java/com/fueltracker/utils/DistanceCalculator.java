@@ -1,7 +1,7 @@
 package com.fueltracker.utils;
 
-import com.fueltracker.model.entity.Expenses;
-import com.fueltracker.model.entity.Refuels;
+import com.fueltracker.model.entity.Expense;
+import com.fueltracker.model.entity.Refuel;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;
@@ -13,7 +13,7 @@ import java.util.List;
 
 public class DistanceCalculator {
 
-    public long calculateTotalDistance(List<Refuels> refuels, List<Expenses> expenses) {
+    public long calculateTotalDistance(List<Refuel> refuels, List<Expense> expenses) {
         List<Integer> distances = new ArrayList<>();
 
         refuels.forEach(refuel -> distances.add(refuel.getOdometer()));
@@ -23,13 +23,13 @@ public class DistanceCalculator {
         return distances.get(distances.size() - 1) - distances.get(0);
     }
 
-    public BigDecimal calculateDistancePerDay(List<Refuels> refuels, List<Expenses> expenses) {
+    public BigDecimal calculateDistancePerDay(List<Refuel> refuels, List<Expense> expenses) {
         long totalDistance = calculateTotalDistance(refuels, expenses);
 
         return BigDecimal.valueOf(totalDistance).divide(calculateAmountOfDays(refuels, expenses), RoundingMode.HALF_UP);
     }
 
-    public long calculateTotalDistance(List<Refuels> refuels) {
+    public long calculateTotalDistance(List<Refuel> refuels) {
         List<Integer> distances = new ArrayList<>();
 
         refuels.forEach(refuel -> distances.add(refuel.getOdometer()));
@@ -38,13 +38,13 @@ public class DistanceCalculator {
         return distances.get(distances.size() - 1) - distances.get(0);
     }
 
-    public BigDecimal calculateDistancePerDay(List<Refuels> refuels) {
+    public BigDecimal calculateDistancePerDay(List<Refuel> refuels) {
         long totalDistance = calculateTotalDistance(refuels);
 
         return BigDecimal.valueOf(totalDistance).divide(calculateAmountOfDays(refuels), RoundingMode.HALF_UP);
     }
 
-    public BigDecimal calculateAmountOfDays(List<Refuels> refuels, List<Expenses> expenses) {
+    public BigDecimal calculateAmountOfDays(List<Refuel> refuels, List<Expense> expenses) {
         List<LocalDateTime> dateTimes = new ArrayList<>();
 
         refuels.forEach(refuel -> dateTimes.add(refuel.getDate()));
@@ -60,7 +60,7 @@ public class DistanceCalculator {
         return BigDecimal.valueOf(duration);
     }
 
-    public BigDecimal calculateAmountOfDays(List<Refuels> refuels) {
+    public BigDecimal calculateAmountOfDays(List<Refuel> refuels) {
         List<LocalDateTime> dateTimes = new ArrayList<>();
 
         refuels.forEach(refuel -> dateTimes.add(refuel.getDate()));
