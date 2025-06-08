@@ -20,9 +20,7 @@ import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExcep
 import java.util.HashMap;
 import java.util.Map;
 
-/**
- * Globalny handler wyjątków dla całej aplikacji
- */
+
 @Slf4j
 @ControllerAdvice
 public class RestExceptionHandler extends ResponseEntityExceptionHandler {
@@ -35,7 +33,6 @@ public class RestExceptionHandler extends ResponseEntityExceptionHandler {
 
     @ExceptionHandler(IllegalArgumentException.class)
     protected ResponseEntity<Object> handleIllegalArgument(IllegalArgumentException ex) {
-        // Szczegółowy komunikat jest już zawarty w samym wyjątku
         ApiError apiError = new ApiError(HttpStatus.BAD_REQUEST, ex.getMessage(), ex);
         return buildResponseEntity(apiError);
     }

@@ -16,7 +16,6 @@ import org.springframework.validation.annotation.Validated;
 
 import java.util.List;
 import java.util.Objects;
-import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -24,6 +23,7 @@ import java.util.stream.Collectors;
 @Validated
 public class VehicleService {
 
+    public static final String NOT_FOUND = " not found";
     private final VehicleRepository vehicleRepository;
     private final CustomerRepository customerRepository;
     private final ModelMapper modelMapper;
@@ -31,13 +31,13 @@ public class VehicleService {
     public List<VehicleDto> getAllVehicles() {
         return vehicleRepository.findAll().stream()
                 .map(vehicle -> modelMapper.map(vehicle, VehicleDto.class))
-                .collect(Collectors.toList());
+                .toList();
     }
 
     public List<Vehicle> getAllUserVehicles() {
         String username = getCurrentUsername();
         long userId = customerRepository.findByUsername(username)
-                .orElseThrow(() -> new ResourceNotFoundException("Customer with username " + username + " not found"))
+                .orElseThrow(() -> new ResourceNotFoundException("Customer with username " + username + NOT_FOUND))
                 .getId();
 
         return vehicleRepository.findAllByCustomerId(userId)
@@ -46,12 +46,11 @@ public class VehicleService {
 
     @Transactional
     public VehicleDto addVehicle(@Valid VehicleDto vehicleDto) {
-        // Validate input
         Objects.requireNonNull(vehicleDto, "Vehicle data cannot be null");
 
         String username = getCurrentUsername();
         Customer customer = customerRepository.findByUsername(username)
-                .orElseThrow(() -> new ResourceNotFoundException("Customer with username " + username + " not found"));
+                .orElseThrow(() -> new ResourceNotFoundException("Customer with username " + username + NOT_FOUND));
 
         vehicleRepository.findVehicleByNameAndCustomerId(vehicleDto.getName(), customer.getId())
                 .ifPresent(vehicle -> {
@@ -71,7 +70,7 @@ public class VehicleService {
         return vehicles.stream()
                 .filter(v -> v.getName().equals(vehicleName))
                 .findAny()
-                .orElseThrow(() -> new ResourceNotFoundException("Vehicle with name " + vehicleName + " not found"));
+                .orElseThrow(() -> new ResourceNotFoundException("Vehicle with name " + vehicleName + NOT_FOUND));
     }
 
     @Transactional
@@ -81,7 +80,7 @@ public class VehicleService {
         Vehicle vehicle = vehicles.stream()
                 .filter(v -> v.getName().equals(vehicleName))
                 .findAny()
-                .orElseThrow(() -> new ResourceNotFoundException("Vehicle with name " + vehicleName + " not found"));
+                .orElseThrow(() -> new ResourceNotFoundException("Vehicle with name " + vehicleName + NOT_FOUND));
 
         vehicleRepository.deleteById(vehicle.getId());
     }

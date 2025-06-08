@@ -31,18 +31,6 @@ public class ApiError {
         timestamp = LocalDateTime.now();
     }
 
-    public ApiError(HttpStatus status) {
-        this();
-        this.status = status;
-    }
-
-    public ApiError(HttpStatus status, Throwable ex) {
-        this();
-        this.status = status;
-        this.message = "Unexpected error";
-        this.debugMessage = ex.getLocalizedMessage();
-    }
-
     public ApiError(HttpStatus status, String message, Throwable ex) {
         this();
         this.status = status;
@@ -50,26 +38,13 @@ public class ApiError {
         this.debugMessage = ex.getLocalizedMessage();
     }
 
-    /**
-     * Dodaje błędy walidacji z mapy błędów (pole -> komunikat błędu)
-     */
     public void addValidationErrors(Map<String, String> fieldErrors) {
         if (validationErrors == null) {
             validationErrors = new ArrayList<>();
         }
 
-        fieldErrors.forEach((field, message) ->
-                validationErrors.add(new ApiValidationError("DTO", field, null, message))
+        fieldErrors.forEach((field, errorMessage) ->
+                validationErrors.add(new ApiValidationError("DTO", field, null, errorMessage))
         );
-    }
-
-    /**
-     * Dodaje pojedynczy błąd walidacji
-     */
-    public void addValidationError(String field, String message) {
-        if (validationErrors == null) {
-            validationErrors = new ArrayList<>();
-        }
-        validationErrors.add(new ApiValidationError("DTO", field, null, message));
     }
 }
