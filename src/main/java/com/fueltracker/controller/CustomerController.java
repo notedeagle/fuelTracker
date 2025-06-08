@@ -9,17 +9,19 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 
 @RestController
 @AllArgsConstructor
 @SecurityRequirement(name = "bearerAuth")
+@RequestMapping("/api/v1/customers")
 public class CustomerController {
 
     private final CustomerService customerService;
 
-    @PutMapping("/customer/{id}")
+    @PutMapping("/{id}")
     ResponseEntity<Object> updateCustomer(@PathVariable long id, @RequestBody @Valid CustomerUpdateDto customer) {
         return customerService.editCustomer(id, customer);
     }

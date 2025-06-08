@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 @AllArgsConstructor
 @RestController
-@RequestMapping("/totalCost")
+@RequestMapping("/api/v1/totalCost")
 @SecurityRequirement(name = "bearerAuth")
 public class TotalCostController {
 
