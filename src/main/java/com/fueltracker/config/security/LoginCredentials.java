@@ -1,8 +1,9 @@
 package com.fueltracker.config.security;
 
-import lombok.Getter;
+import lombok.Data;
 
-@Getter
+
+@Data
 public class LoginCredentials {
     private String username;
     private String password;

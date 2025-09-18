@@ -25,16 +25,4 @@ public class DateCalculator {
                 .endDate(dates.getLast())
                 .build();
     }
-
-    public Dates startAndEndDateCalculator(List<Refuel> refuels) {
-        List<LocalDate> dates = new ArrayList<>();
-
-        refuels.forEach(refuel -> dates.add(refuel.getDate().toLocalDate()));
-        Collections.sort(dates);
-
-        return Dates.builder()
-                .startDate(dates.getFirst())
-                .endDate(dates.getLast())
-                .build();
-    }
 }

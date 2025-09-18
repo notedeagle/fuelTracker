@@ -6,12 +6,9 @@ services:
     restart: always
     environment:
       POSTGRES_DB: fuelTracker
-      POSTGRES_USER: admin
-      POSTGRES_PASSWORD: pass123
+      POSTGRES_USER: fuelTracker
+      POSTGRES_PASSWORD: postgresDev
     ports:
       - "6432:5432"
-
-  app:
-    image: fueltracker:latest
-    ports:
-      - "8080:8081"
+    volumes:
+      - ./database:/var/lib/postgresql

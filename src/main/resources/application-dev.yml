@@ -7,7 +7,7 @@ logging:
       hibernate:
         SQL: INFO
 
-#DATABASELOCAL
+#DATABASEDEV
 spring:
   datasource:
     url: jdbc:postgresql://localhost:6432/fuelTracker
