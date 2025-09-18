@@ -5,9 +5,6 @@ import com.fueltracker.model.dto.VehicleDto;
 import com.fueltracker.model.entity.Refuel;
 import com.fueltracker.model.entity.Vehicle;
 import com.fueltracker.repository.CustomerRepository;
-import com.fueltracker.utils.CostCalculator;
-import com.fueltracker.utils.DateCalculator;
-import com.fueltracker.utils.DistanceCalculator;
 import io.swagger.v3.oas.annotations.enums.SecuritySchemeType;
 import io.swagger.v3.oas.annotations.security.SecurityScheme;
 import lombok.RequiredArgsConstructor;
@@ -63,21 +60,6 @@ public class Config {
         modelMapper.createTypeMap(RefuelDto.class, Refuel.class);
 
         return modelMapper;
-    }
-
-    @Bean
-    public CostCalculator costCalculator() {
-        return new CostCalculator();
-    }
-
-    @Bean
-    public DistanceCalculator distanceCalculator() {
-        return new DistanceCalculator();
-    }
-
-    @Bean
-    public DateCalculator dateCalculator() {
-        return new DateCalculator();
     }
 
     @Bean

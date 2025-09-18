@@ -2,6 +2,7 @@ package com.fueltracker.utils;
 
 import com.fueltracker.model.entity.Expense;
 import com.fueltracker.model.entity.Refuel;
+import org.springframework.stereotype.Component;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;
@@ -11,35 +12,36 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
+@Component
 public class DistanceCalculator {
 
-    public long calculateTotalDistance(List<Refuel> refuels, List<Expense> expenses) {
+    public int calculateTotalDistance(List<Refuel> refuels, List<Expense> expenses) {
         List<Integer> distances = new ArrayList<>();
 
         refuels.forEach(refuel -> distances.add(refuel.getOdometer()));
         expenses.forEach(expense -> distances.add(expense.getOdometer()));
         Collections.sort(distances);
 
-        return distances.get(distances.size() - 1) - distances.get(0);
+        return distances.getLast() - distances.getFirst();
     }
 
     public BigDecimal calculateDistancePerDay(List<Refuel> refuels, List<Expense> expenses) {
-        long totalDistance = calculateTotalDistance(refuels, expenses);
+        int totalDistance = calculateTotalDistance(refuels, expenses);
 
         return BigDecimal.valueOf(totalDistance).divide(calculateAmountOfDays(refuels, expenses), RoundingMode.HALF_UP);
     }
 
-    public long calculateTotalDistance(List<Refuel> refuels) {
+    public int calculateTotalDistance(List<Refuel> refuels) {
         List<Integer> distances = new ArrayList<>();
 
         refuels.forEach(refuel -> distances.add(refuel.getOdometer()));
         Collections.sort(distances);
 
-        return distances.get(distances.size() - 1) - distances.get(0);
+        return distances.getLast() - distances.getFirst();
     }
 
     public BigDecimal calculateDistancePerDay(List<Refuel> refuels) {
-        long totalDistance = calculateTotalDistance(refuels);
+        int totalDistance = calculateTotalDistance(refuels);
 
         return BigDecimal.valueOf(totalDistance).divide(calculateAmountOfDays(refuels), RoundingMode.HALF_UP);
     }

@@ -18,7 +18,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
 @RequiredArgsConstructor
 @RestController
@@ -41,7 +40,7 @@ public class ExpenseController {
         Vehicle vehicle = vehicleService.getCustomerVehicleByName(vehicleName);
         List<ExpenseDto> expenses = expenseService.getAllExpenses(vehicle.getId()).stream()
                 .map(this::convertToDto)
-                .collect(Collectors.toList());
+                .toList();
         return ResponseEntity.ok(expenses);
     }
 

@@ -3,13 +3,18 @@ package com.fueltracker.utils;
 import com.fueltracker.model.dto.CostPerMonth;
 import com.fueltracker.model.entity.Expense;
 import com.fueltracker.model.entity.Refuel;
+import lombok.RequiredArgsConstructor;
+import org.springframework.stereotype.Component;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.util.*;
 
+@Component
+@RequiredArgsConstructor
 public class CostCalculator {
-    private final DistanceCalculator distanceCalculator = new DistanceCalculator();
+
+    private final DistanceCalculator distanceCalculator;
 
     public BigDecimal calculateTotalCost(List<Refuel> refuels, List<Expense> expenses) {
         BigDecimal refuelCost = refuels.stream()

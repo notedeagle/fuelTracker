@@ -20,7 +20,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/api/v1/refuels")
@@ -43,7 +42,7 @@ public class RefuelController {
         Vehicle vehicle = vehicleService.getCustomerVehicleByName(vehicleName);
         List<RefuelDto> refuels = refuelService.getAllCarRefuel(vehicle.getId()).stream()
                 .map(this::convertToDto)
-                .collect(Collectors.toList());
+                .toList();
         return ResponseEntity.ok(refuels);
     }
 

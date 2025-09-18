@@ -15,7 +15,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
 @RequiredArgsConstructor
 @RestController
@@ -44,7 +43,7 @@ public class VehicleController {
     public ResponseEntity<List<VehicleDto>> findAllUserVehicles() {
         List<VehicleDto> vehicles = vehicleService.getAllUserVehicles().stream()
                 .map(vehicle -> modelMapper.map(vehicle, VehicleDto.class))
-                .collect(Collectors.toList());
+                .toList();
         return ResponseEntity.ok(vehicles);
     }
 

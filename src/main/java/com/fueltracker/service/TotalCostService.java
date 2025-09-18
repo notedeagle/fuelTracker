@@ -16,6 +16,7 @@ import java.util.List;
 @Service
 public record TotalCostService(CostCalculator costCalculator, DistanceCalculator distanceCalculator, VehicleService vehicleService,
                                RefuelService refuelService, ExpenseService expenseService, DateCalculator dateCalculator) {
+
     public AllCustomerCostDto getTotalCost(String vehicleName) {
         Vehicle vehicle = vehicleService.getCustomerVehicleByName(vehicleName);
 

@@ -10,5 +10,6 @@ import java.util.Optional;
 
 @Repository
 public interface RefuelRepository extends JpaRepository<Refuel, Long> {
+
     Optional<List<Refuel>> findAllByVehicleId(@Param("id") Long id);
 }
