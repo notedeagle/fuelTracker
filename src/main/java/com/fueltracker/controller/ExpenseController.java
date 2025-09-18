@@ -1,23 +1,29 @@
 package com.fueltracker.controller;
 
 import com.fueltracker.model.dto.ExpenseDto;
-import com.fueltracker.model.entity.Expenses;
-import com.fueltracker.model.entity.Vehicles;
+import com.fueltracker.model.entity.Expense;
+import com.fueltracker.model.entity.Vehicle;
 import com.fueltracker.service.ExpenseService;
 import com.fueltracker.service.VehicleService;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
-import lombok.AllArgsConstructor;
+import io.swagger.v3.oas.annotations.tags.Tag;
+import jakarta.validation.Valid;
+import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
-import org.springframework.transaction.annotation.Transactional;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
-@AllArgsConstructor
+@RequiredArgsConstructor
 @RestController
-@RequestMapping("/expense")
+@RequestMapping("/api/v1/expenses")
 @SecurityRequirement(name = "bearerAuth")
+@Tag(name = "Expense Controller", description = "API for managing vehicle expenses")
 public class ExpenseController {
 
     private final ExpenseService expenseService;
@@ -25,23 +31,50 @@ public class ExpenseController {
     private final ModelMapper mapper;
 
     @GetMapping("/{vehicleName}")
-    public List<ExpenseDto> findAllExpensesByVehicleName(@PathVariable String vehicleName) {
-        Vehicles vehicle = vehicleService.getCustomerVehicleByName(vehicleName);
-
-        return expenseService.getAllExpenses(vehicle.getId()).stream()
-                .map(v -> mapper.map(v, ExpenseDto.class))
-                .collect(Collectors.toList());
+    @Operation(summary = "Get all expenses for a vehicle")
+    @ApiResponses(value = {
+        @ApiResponse(responseCode = "200", description = "Successfully retrieved expenses"),
+        @ApiResponse(responseCode = "404", description = "Vehicle not found")
+    })
+    public ResponseEntity<List<ExpenseDto>> findAllExpensesByVehicleName(@PathVariable String vehicleName) {
+        Vehicle vehicle = vehicleService.getCustomerVehicleByName(vehicleName);
+        List<ExpenseDto> expenses = expenseService.getAllExpenses(vehicle.getId()).stream()
+                .map(this::convertToDto)
+                .toList();
+        return ResponseEntity.ok(expenses);
     }
 
     @PostMapping("/{vehicleName}")
-    public ExpenseDto addExpense(@RequestBody ExpenseDto expenseDto, @PathVariable String vehicleName) {
-        Expenses expense = mapper.map(expenseDto, Expenses.class);
-        return mapper.map(expenseService.addExpense(expense, vehicleName), ExpenseDto.class);
+    @ResponseStatus(HttpStatus.CREATED)
+    @Operation(summary = "Add an expense record for a vehicle")
+    @ApiResponses(value = {
+        @ApiResponse(responseCode = "201", description = "Expense record created"),
+        @ApiResponse(responseCode = "400", description = "Invalid input data"),
+        @ApiResponse(responseCode = "404", description = "Vehicle not found")
+    })
+    public ResponseEntity<ExpenseDto> addExpense(@Valid @RequestBody ExpenseDto expenseDto, @PathVariable String vehicleName) {
+        Expense expense = convertToEntity(expenseDto);
+        Expense savedExpense = expenseService.addExpense(expense, vehicleName);
+        return ResponseEntity.status(HttpStatus.CREATED).body(convertToDto(savedExpense));
     }
 
-    @Transactional
     @DeleteMapping("/{expenseId}")
-    public void deleteExpense(@PathVariable long expenseId) {
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    @Operation(summary = "Delete an expense record")
+    @ApiResponses(value = {
+        @ApiResponse(responseCode = "204", description = "Expense record deleted"),
+        @ApiResponse(responseCode = "404", description = "Expense record not found")
+    })
+    public ResponseEntity<Void> deleteExpense(@PathVariable long expenseId) {
         expenseService.deleteExpense(expenseId);
+        return ResponseEntity.noContent().build();
+    }
+
+    private ExpenseDto convertToDto(Expense expense) {
+        return mapper.map(expense, ExpenseDto.class);
+    }
+
+    private Expense convertToEntity(ExpenseDto expenseDto) {
+        return mapper.map(expenseDto, Expense.class);
     }
 }

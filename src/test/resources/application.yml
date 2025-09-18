@@ -1,0 +1,11 @@
+#JWT
+jwt:
+  secret: test-secret-key-for-testing-purposes-123456789012345678901234567890
+  expiration: 86400000 # a day
+  refresh-token:
+    expiration: 604800000 # 7 days
+
+#SERVER
+server:
+  error:
+    include-message: never

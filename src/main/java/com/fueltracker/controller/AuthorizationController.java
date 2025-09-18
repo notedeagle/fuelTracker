@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.*;
 
 @RestController
 @AllArgsConstructor
-@RequestMapping("/auth")
+@RequestMapping("/api/v1/auth")
 public class AuthorizationController {
 
     private final RegistrationService registrationService;
@@ -40,10 +40,5 @@ public class AuthorizationController {
     @PostMapping("/login")
     public ResponseEntity<AuthenticationResponse> login(@RequestBody LoginCredentials credentials) {
         return ResponseEntity.ok(customerService.authenticate(credentials));
-    }
-
-    @GetMapping("/secured")
-    public String secured() {
-        return "secured";
     }
 }

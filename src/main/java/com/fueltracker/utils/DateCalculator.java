@@ -1,16 +1,19 @@
 package com.fueltracker.utils;
 
 import com.fueltracker.model.dto.Dates;
-import com.fueltracker.model.entity.Expenses;
-import com.fueltracker.model.entity.Refuels;
+import com.fueltracker.model.entity.Expense;
+import com.fueltracker.model.entity.Refuel;
+import org.springframework.stereotype.Component;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
+@Component
 public class DateCalculator {
-    public Dates startAndEndDateCalculator(List<Refuels> refuels, List<Expenses> expenses) {
+
+    public Dates startAndEndDateCalculator(List<Refuel> refuels, List<Expense> expenses) {
         List<LocalDate> dates = new ArrayList<>();
 
         refuels.forEach(refuel -> dates.add(refuel.getDate().toLocalDate()));
@@ -18,20 +21,8 @@ public class DateCalculator {
         Collections.sort(dates);
 
         return Dates.builder()
-                .startDate(dates.get(0))
-                .endDate(dates.get(dates.size() - 1))
-                .build();
-    }
-
-    public Dates startAndEndDateCalculator(List<Refuels> refuels) {
-        List<LocalDate> dates = new ArrayList<>();
-
-        refuels.forEach(refuel -> dates.add(refuel.getDate().toLocalDate()));
-        Collections.sort(dates);
-
-        return Dates.builder()
-                .startDate(dates.get(0))
-                .endDate(dates.get(dates.size() - 1))
+                .startDate(dates.getFirst())
+                .endDate(dates.getLast())
                 .build();
     }
 }

@@ -15,7 +15,7 @@ public class AllCustomerCostDto {
     private BigDecimal totalCost;
     private BigDecimal costPerDay;
     private BigDecimal costPerKm;
-    private long totalDistance;
+    private int totalDistance;
     private BigDecimal distancePerDay;
     private Set<CostPerMonth> costPerMonth;
 }
