@@ -54,7 +54,7 @@ public class DistanceCalculator {
 
         Collections.sort(dateTimes);
 
-        long duration = ChronoUnit.DAYS.between(dateTimes.get(0).toLocalDate(), dateTimes.get(dateTimes.size() - 1).toLocalDate());
+        long duration = ChronoUnit.DAYS.between(dateTimes.getFirst().toLocalDate(), dateTimes.getLast().toLocalDate());
 
         if (duration == 0) {
             return BigDecimal.ONE;
@@ -69,7 +69,7 @@ public class DistanceCalculator {
 
         Collections.sort(dateTimes);
 
-        long duration = ChronoUnit.DAYS.between(dateTimes.get(0).toLocalDate(), dateTimes.get(dateTimes.size() - 1).toLocalDate());
+        long duration = ChronoUnit.DAYS.between(dateTimes.getFirst().toLocalDate(), dateTimes.getLast().toLocalDate());
         return BigDecimal.valueOf(duration);
     }
 }
